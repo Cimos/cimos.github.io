@@ -5,13 +5,13 @@ navbar_entries:
   - title: blog
     url: blog
 
-  # - title: website
-  #   url: https://www.abhinav.co
+  - title: experience 
+    url: about
 
-# project_entries:
-#   - title: Project 1
-#     url: starting-a-webpage
-#     desc: This is an example project, configured in _data/home.yml
+project_entries:
+  - title: Corne Split Keyboard
+    url: mechanical-keyboard-rabbit-hole
+    desc: My journey into the world of custom mechanical keyboards.
 
   # - title: Project 2
   #   url: overview-post

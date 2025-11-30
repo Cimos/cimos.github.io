@@ -60,3 +60,21 @@ If you’re on the fence about building a split ortho — just do it. Soldering 
 **P.S.** If you’re in Australia and staring at parts lists wondering where to start, feel free to ping me (GitHub issues, X DMs, whatever). Happy to help with recommendations, soldering advice, or just give you the final nudge.
 
 Happy hacking!
+
+## Build Images
+
+
+<p float="left">
+  <figure>
+      <img src="../_screenshots/crkbd/IMG_2223.JPG" width="909"
+          alt="Crkbd Build Image">
+  </figure>
+  <figure>
+      <img src="../_screenshots/crkbd/IMG_2225.JPG" width="300"
+          alt="Crkbd Build Image">
+      <img src="../_screenshots/crkbd/IMG_2224.JPG" width="300"
+          alt="Crkbd Build Image">
+      <img src="../_screenshots/crkbd/IMG_2226.JPG" width="300"
+          alt="Crkbd Build Image">
+  </figure>
+</p>
