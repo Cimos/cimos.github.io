@@ -5,9 +5,6 @@ navbar_entries:
   - title: blog
     url: blog
 
-  - title: experience 
-    url: about
-
 project_entries:
   - title: Corne Split Keyboard
     url: mechanical-keyboard-rabbit-hole

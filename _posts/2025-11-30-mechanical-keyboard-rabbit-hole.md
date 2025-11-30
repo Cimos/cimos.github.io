@@ -59,21 +59,32 @@ If you’re on the fence about building a split ortho — just do it. Soldering 
 
 **P.S.** If you’re in Australia and staring at parts lists wondering where to start, feel free to ping me (GitHub issues, X DMs, whatever). Happy to help with recommendations, soldering advice, or just give you the final nudge.
 
-Happy hacking!
+Happy Clacking!
 
 ## Build Images
 
-<p float="left">
-  <figure>
-      <img src="../images/crkbd/IMG_2223.JPG" width="909"
-          alt="Crkbd Build Image">
-  </figure>
-  <figure>
-      <img src="../images/crkbd/IMG_2225.JPG" width="300"
-          alt="Crkbd Build Image">
-      <img src="../images/crkbd/IMG_2224.JPG" width="300"
-          alt="Crkbd Build Image">
-      <img src="../images/crkbd/IMG_2226.JPG" width="300"
-          alt="Crkbd Build Image">
-  </figure>
-</p>
+<div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0;">
+  <!-- First row – big image (optional, can be removed) -->
+  <div style="flex: 1 1 100%; text-align: center;">
+    <img src="../images/crkbd/IMG_2223.JPG" 
+         alt="Crkbd full view" 
+         style="max-width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+
+  <!-- Second row – three small ones side-by-side -->
+  <div style="flex: 1 1 300px; text-align: center;">
+    <img src="../images/crkbd/IMG_2226.JPG" 
+         alt="Crkbd detail 3" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 300px; text-align: center;">
+    <img src="../images/crkbd/IMG_2224.JPG" 
+         alt="Crkbd detail 2" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 300px; text-align: center;">
+    <img src="../images/crkbd/IMG_2225.JPG" 
+         alt="Crkbd detail 1" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+</div>

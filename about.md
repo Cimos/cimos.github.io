@@ -10,7 +10,7 @@ title: About
               margin: 0 0 5rem 0;      /* ← 5rem = ~80 px gap below the image */
               width: 180px;
               height: auto;
-              border-radius: 50px;
+              border-radius: 12px;
               border: 3px solid #fff; 
               box-shadow: 0 8px 25px rgba(0,0,0,0.15);
               object-fit: cover;">
