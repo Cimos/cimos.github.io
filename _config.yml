@@ -2,9 +2,13 @@ title: MadMan's Blog
 author: MadMan
 # url: https://www.abhinavsaxena.com/moonwalk # root address of the site
 url: https://cimos.github.io/ # root address of the site
-description: > # description of the site (multiple lines allowed)
-  A single place to host a collection of my projects, thoughts, and ideas.
-
+description: "
+  Electronics & Electrical Engineer specialising in flight-critical avionics, power systems, and embedded hardware-software solutions for unmanned and autonomous aerospace platforms.
+  Currently at Praetorian Aeronautics (Nov 2025 – present), I design and integrate high-reliability electrical architectures, sensor suites, and SWaP-optimised electronics that push the boundaries of next-generation defence technology.  
+  From 2022 to 2025 I was a Hardware & Software Design Engineer at SYPAQ Systems, delivering embedded solutions for electronic warfare, countermeasure systems, and unmanned aerial programs — taking concepts from specification all the way to flight-qualified hardware in some of Australia’s most advanced sovereign defence projects.
+  Earlier experience at Fiberdyne Systems saw me develop a fully automated bench-testing platform and associated mixed-signal firmware that transformed PCB manufacturing quality and yield.
+  Armed with a Bachelor of Engineering (Electrical & Electronics) and an Advanced Diploma from RMIT University, I thrive at the intersection of hardware and software in environments where precision and reliability are non-negotiable. Real-time systems, FPGA development, RF engineering, and building technology that simply cannot fail — that’s where I’m at home
+  "
 permalink: /:slug
 
 favicon: "./logo.png" # relative path to site's favicon
