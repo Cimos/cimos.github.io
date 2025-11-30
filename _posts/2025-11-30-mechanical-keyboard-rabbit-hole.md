@@ -63,18 +63,17 @@ Happy hacking!
 
 ## Build Images
 
-
 <p float="left">
   <figure>
-      <img src="../_screenshots/crkbd/IMG_2223.JPG" width="909"
+      <img src="../images/crkbd/IMG_2223.JPG" width="909"
           alt="Crkbd Build Image">
   </figure>
   <figure>
-      <img src="../_screenshots/crkbd/IMG_2225.JPG" width="300"
+      <img src="../images/crkbd/IMG_2225.JPG" width="300"
           alt="Crkbd Build Image">
-      <img src="../_screenshots/crkbd/IMG_2224.JPG" width="300"
+      <img src="../images/crkbd/IMG_2224.JPG" width="300"
           alt="Crkbd Build Image">
-      <img src="../_screenshots/crkbd/IMG_2226.JPG" width="300"
+      <img src="../images/crkbd/IMG_2226.JPG" width="300"
           alt="Crkbd Build Image">
   </figure>
 </p>
