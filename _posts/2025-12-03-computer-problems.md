@@ -6,13 +6,23 @@ date:   2025-12-04
 tags: [pc,desktop,amd,motherboard]
 ---
 
-# Fixing My PC: A Year of POST Problems and the Parts I Actually Bought
+## Table of contents
+
+- [Table of contents](#table-of-contents)
+- [Fixing My PC: A Year of POST Problems and the Parts I Actually Bought](#fixing-my-pc-a-year-of-post-problems-and-the-parts-i-actually-bought)
+- [Diagnosis](#diagnosis)
+- [Micro ATX Case – What I Chose](#micro-atx-case--what-i-chose)
+- [CPU – What I Chose](#cpu--what-i-chose)
+- [Motherboard – What I Chose](#motherboard--what-i-chose)
+- [Parts List I Actually Ordered](#parts-list-i-actually-ordered)
+
+## Fixing My PC: A Year of POST Problems and the Parts I Actually Bought
 
 I’ve been fighting random boot issues for over a year. At first it was just an occasional RAM POST error — moving a stick one slot over fixed it. Then around May this year the machine started throwing RAM and VGA errors together. The lazy fix? Keep smashing the reset button until it finally posted. Yeah, I know… but I had stuff to do and I’m cheap.
 
 Fast-forward five months and the reset-button roulette stopped working reliably. Time to actually fix it.
 
-## Diagnosis
+### Diagnosis
 - MemTest86 ran for hours → zero errors  
 - PSU rails rock-solid at 12.31 V ±0.03 V  
 - Swapped my brother’s known-good GTX 1070 and RAM → same problem  
@@ -24,7 +34,7 @@ I’m a tight-arse, so my first plan was just to grab the cheapest working AM4 b
 
 Here are the trade studies I actually did and what I ended up buying.
 
-### Micro ATX Case – What I Chose
+#### Micro ATX Case – What I Chose
 <!-- 
 | Case                                    | Price | Volume | GPU Max | Fans / Rad       | Side Panel     | My Thoughts &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |
 |-----------------------------------------|-------|--------|---------|------------------|----------------|--------------------------------------------------|
@@ -135,7 +145,7 @@ I went with the **Lian Li DAN-A3 Black Mesh** because it’s the cheapest fully-
   </div>
 </div>
 
-### CPU – What I Chose
+#### CPU – What I Chose
 
 <table>
   <thead>
@@ -199,7 +209,7 @@ I decided on the **Ryzen 7 5700X**. For ~$80 more than the 5500 I get two extra 
   </div>
 </div>
 
-### Motherboard – What I Chose  
+#### Motherboard – What I Chose  
 <table>
   <thead>
     <tr style="background-color: #2c3e50; color: white;">
@@ -267,7 +277,7 @@ I went with the **ASRock B550M WiFi SE** because for only $40 more than the dirt
   </div>
 </div>
 
-## Parts List I Actually Ordered
+### Parts List I Actually Ordered
 - Case: Lian Li DAN-A3 Black Mesh – $70  
 - CPU: AMD Ryzen 7 5700X – $160  
 - Motherboard: ASRock B550M WiFi SE – $95  
