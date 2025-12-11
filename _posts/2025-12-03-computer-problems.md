@@ -15,6 +15,7 @@ tags: [pc,desktop,amd,motherboard]
 - [CPU – What I Chose](#cpu--what-i-chose)
 - [Motherboard – What I Chose](#motherboard--what-i-chose)
 - [Parts List I Actually Ordered](#parts-list-i-actually-ordered)
+- [Build Photos](#build-update-photos)
 
 ## Fixing My PC: A Year of POST Problems and the Parts I Actually Bought
 
@@ -283,3 +284,90 @@ I went with the **ASRock B550M WiFi SE** because for only $40 more than the dirt
 - Motherboard: ASRock B550M WiFi SE – $95  
 
 Total spend: ~$325
+
+### Build Update Photos
+<!-- Row 1 -->
+<div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0;">
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0001.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0002.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0003.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+</div>
+<!-- Row 2 -->
+<div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0;">
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0004.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0005.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0006.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+</div>
+<!-- Row 3 -->
+<div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0;">
+  <div style="flex: 1 1 380px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0007.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0008.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0009.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+</div>
+<!-- Row 4 -->
+<div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0;">
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0010.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0011.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0012.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+</div>
+<!-- Row 5 -->
+<div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0;">
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0013.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+  <div style="flex: 1 1 200px; text-align: center;">
+    <img src="../images/computer-problems/BLD_0014.JPG" 
+         alt="MadPC Build" 
+         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  </div>
+</div>
