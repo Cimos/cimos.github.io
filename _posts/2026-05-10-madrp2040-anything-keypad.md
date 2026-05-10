@@ -62,13 +62,40 @@ Smaller fixes along the way: hidden text on fab layers, 3.3V LDO swapped from ad
 
 The most reusable thing to come out of this project is the CI. Every push to `main` runs five GitHub Actions jobs against the KiCad project:
 
-| Job                  | What it produces                                                                                                              |
-|----------------------|-------------------------------------------------------------------------------------------------------------------------------|
-| **Build PCB Datapack** | Gerbers (JLC / PCBWay / Elecrow / FusionPCB / P-Ban variants), drill files, position files, schematic PDF, BOM (HTML + CSV + iBOM + KiCost), stencil DXF/STL/SCAD, design report. |
-| **Build Panel Datapack** | Panelised KiCad project, panelised gerbers per fab, panel drawing PDF, panel render PNG.                                    |
-| **Build 2D Images**    | Blender renders of the assembled board: top, top-straight, bottom, bottom-straight.                                          |
-| **Build 3D CAD Model** | Full + simplified STEP files for mechanical CAD.                                                                              |
-| **Build PCB Diff**     | Visual rev-over-rev diff against the previous merged version, so PR reviewers can see what moved.                            |
+<table style="width: 100%; table-layout: fixed;">
+  <colgroup>
+    <col style="width: 30%;">
+    <col style="width: 70%;">
+  </colgroup>
+  <thead>
+    <tr style="background-color: #2c3e50; color: white;">
+      <th>Job</th>
+      <th>What it produces</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Build PCB Datapack</strong></td>
+      <td>Gerbers (JLC / PCBWay / Elecrow / FusionPCB / P-Ban variants), drill files, position files, schematic PDF, BOM (HTML + CSV + iBOM + KiCost), stencil DXF/STL/SCAD, design report.</td>
+    </tr>
+    <tr>
+      <td><strong>Build Panel Datapack</strong></td>
+      <td>Panelised KiCad project, panelised gerbers per fab, panel drawing PDF, panel render PNG.</td>
+    </tr>
+    <tr>
+      <td><strong>Build 2D Images</strong></td>
+      <td>Blender renders of the assembled board: top, top-straight, bottom, bottom-straight.</td>
+    </tr>
+    <tr>
+      <td><strong>Build 3D CAD Model</strong></td>
+      <td>Full + simplified STEP files for mechanical CAD.</td>
+    </tr>
+    <tr>
+      <td><strong>Build PCB Diff</strong></td>
+      <td>Visual rev-over-rev diff against the previous merged version, so PR reviewers can see what moved.</td>
+    </tr>
+  </tbody>
+</table>
 
 It runs on GitHub-hosted runners, driven by [KiBot](https://github.com/INTI-CMNB/KiBot) and a shared `kibot-config` repo via submodule. About two minutes wall time per push, artifacts on the run page.
 
@@ -96,41 +123,22 @@ If you want to fab one: clone the repo, grab the latest green CI run, and the JL
 
 From the CI on the most recent push to `main`.
 
-<!-- Top + bottom 3/4 view -->
-<div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0;">
-  <div style="flex: 1 1 380px; text-align: center;">
-    <img src="../images/madrp2040/Mad_RP2040-3D_blender_top.png"
-         alt="MadRP2040 top, 3/4 view, with keycaps"
-         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
-  </div>
-  <div style="flex: 1 1 380px; text-align: center;">
-    <img src="../images/madrp2040/Mad_RP2040-3D_blender_bottom.png"
-         alt="MadRP2040 bottom, 3/4 view, showing SK6812MINI-E LEDs and routing"
-         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
-  </div>
-</div>
-
-<!-- Top + bottom straight-on -->
-<div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0;">
-  <div style="flex: 1 1 380px; text-align: center;">
-    <img src="../images/madrp2040/Mad_RP2040-3D_blender_top_straight.png"
-         alt="MadRP2040 top, straight-on"
-         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
-  </div>
-  <div style="flex: 1 1 380px; text-align: center;">
-    <img src="../images/madrp2040/Mad_RP2040-3D_blender_bottom_straight.png"
-         alt="MadRP2040 bottom, straight-on"
-         style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
-  </div>
-</div>
-
-<!-- Panel render, full width -->
-<div style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin: 3rem 0;">
-  <div style="flex: 1 1 100%; text-align: center;">
-    <img src="../images/madrp2040/Mad_RP2040-panel.png"
-         alt="MadRP2040 1x2 panelised PCB ready for fab"
-         style="max-width: 80%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
-  </div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 3rem 0;">
+  <img src="../images/madrp2040/Mad_RP2040-3D_blender_top.png"
+       alt="MadRP2040 top, 3/4 view, with keycaps"
+       style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  <img src="../images/madrp2040/Mad_RP2040-3D_blender_bottom.png"
+       alt="MadRP2040 bottom, 3/4 view, showing SK6812MINI-E LEDs and routing"
+       style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  <img src="../images/madrp2040/Mad_RP2040-3D_blender_top_straight.png"
+       alt="MadRP2040 top, straight-on"
+       style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  <img src="../images/madrp2040/Mad_RP2040-3D_blender_bottom_straight.png"
+       alt="MadRP2040 bottom, straight-on"
+       style="width: 100%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15);">
+  <img src="../images/madrp2040/Mad_RP2040-panel.png"
+       alt="MadRP2040 1x2 panelised PCB ready for fab"
+       style="width: 100%; max-width: 80%; height: auto; border-radius: 12px; box-shadow: 0 6px 20px rgba(0,0,0,0.15); grid-column: 1 / -1; justify-self: center;">
 </div>
 
 -SM

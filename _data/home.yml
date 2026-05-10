@@ -6,54 +6,27 @@ navbar_entries:
     url: blog
 
 project_entries:
+  - title: Mad_RP2040
+    url: madrp2040-anything-keypad
+    desc: 4×4 backlit "anything keypad" built around the RP2040, with a full KiBot CI pipeline. Started as a 2-key controller test board.
+
   - title: Corne Split Keyboard
     url: mechanical-keyboard-rabbit-hole
     desc: My journey into the world of custom mechanical keyboards.
+
+  - title: KiCad Custom Design Rules (VS Code)
+    url: vscode-kicad-dru-extension
+    desc: A small VS Code extension adding syntax highlighting and snippets for KiCad's `.kicad_dru` custom design rule files.
 
   - title: TODO List for the Lazy
     url: todo-list
     desc: A living list of what I'm working on, putting off, or pretending doesn't exist.
     highlight: WIP
 
-  # - title: Project 2
-  #   url: overview-post
-  #   desc: Projects are shown in card layout
-
-  # - title: Project 3
-  #   url: overview-post
-  #   desc: You can control visibility from _config.yml file
-
-  # - title: Project 4
-  #   url: overview-post
-  #   desc: This project uses highlight markup, configured in _data/home.yml
-  #   highlight: WIP
-
-  # - title: Project 5
-  #   url: overview-post
-  #   desc: Moonwalk also has horizontal list (used in header and footer)
-  #   highlight: WIP
-
-  # - title: Project 6
-  #   url: overview-post
-  #   desc: It also has a scalable vertical list (in case you need it)
-
-# old_project_entries:
-#   - title: Soopr
-#     url: https://www.soopr.co
-#     desc: Delight your readers - add beautiful share and like buttons easily to your websites 
-#     highlight: NEW
-
-#   - title: Cookie
-#     url: https://github.com/abhinavs/cookie
-#     desc: An open source landing website with supporting pages and integrated blog
-
-#   - title: Moonwalk
-#     url: https://github.com/abhinavs/moonwalk
-#     desc: A fast and minimalist Jekyll blog theme with clean dark mode
-
-#   - title: Humangous
-#     url: https://www.humangous.co
-#     desc: The better people know you, the better they collaborate
+old_project_entries:
+  - title: Mic Phantom Power Supply
+    url: mic-phantom-power-supply
+    desc: A standalone 48 V phantom power supply for condenser microphones. From the archives — 2017 vintage.
 
 footer_entries:
   - title: X

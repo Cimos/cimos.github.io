@@ -57,6 +57,8 @@ This Corne has been my daily driver for over 12 months. I have zero intention of
 
 If you’re on the fence about building a split ortho — just do it. Soldering is nowhere near as scary as it looks, the community is ridiculously helpful, and the end result feels like it was custom-made for your hands.
 
+Building the Corne kit also got me itching to design my own from scratch. The first step on that road is [Mad_RP2040]({% post_url 2026-05-10-madrp2040-anything-keypad %}) — a small RP2040 test board that's slowly turned into a full 4×4 keypad while I sort out the controller block for the eventual split.
+
 **P.S.** If you’re in Australia and staring at parts lists wondering where to start, feel free to ping me (GitHub issues, X DMs, whatever). Happy to help with recommendations, soldering advice, or just give you the final nudge.
 
 Happy Clacking!

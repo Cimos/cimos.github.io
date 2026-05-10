@@ -32,7 +32,7 @@ layout: default
 {% endif %}
 
 {% if site.theme_config.show_old_projects == true %}
-  <h2>{{ site.theme_config.home.title_old_projects }}</h2>
+  <h2>{{ site.theme_config.home.title_old_projects | default: 'Archive' }}</h2>
   {% include card_list.html collection=site.data.home.old_project_entries %}
 {% endif %}
 
