@@ -28,7 +28,7 @@ Passionate about innovation and continuous professional growth, I thrive on tack
 ## Professional Experience
 
 **Electrical & Electronics Engineer - UAS Systems**  
-*Confidential* | January 2026 – Present
+January 2026 – Present
 - New-product hardware design and production support for a commercial UAV avionics manufacturer
 - Schematic and high-density mixed-signal PCB layout spanning IMU, GNSS, barometer, magnetometer, RF and embedded compute (STM32, FPGA, CM5/RPi)
 - Multi-rail power architectures with redundancy and isolation for flight-critical hardware
@@ -40,7 +40,7 @@ Passionate about innovation and continuous professional growth, I thrive on tack
 - Mentoring new graduate engineers on hardware and production processes
 
 **Electrical & Electronics Engineer**  
-*Praetorian Aeronautics* | October 2025 – January 2026
+*Praetorian Aeronautics* October 2025 – January 2026
 - Performed electronics and electrical design for autonomous UAS platforms, including interceptor and loitering munition systems
 - Focused on hardware design, contributing to avionics components for counter-UAS applications during a short-term engagement
 - Designed and reviewed wiring diagrams for platform-level electrical systems
