@@ -20,15 +20,15 @@ title: About Me
 
 # Hi, I’m Simon Maddison 👋
 
-## Electronics & Software Design Engineer
+## UAS Systems Engineer — Electronics & Software
 
 Dynamic Electrical Engineer specializing in embedded systems, UAV avionics, and full-stack hardware-software integration for defense and aerospace applications.
 Passionate about innovation and continuous professional growth, I thrive on tackling complex challenges with enthusiasm while expanding my technical expertise. Effective communicator with a proven ability to build strong relationships and collaborate seamlessly.
 
 ## Professional Experience
 
-**Electronics Engineer**  
-*Confidential* | February 2026 – Present
+**Electrical & Electronics Engineer - UAS Systems**  
+*Confidential* | January 2026 – Present
 - New-product hardware design and production support for a commercial UAV avionics manufacturer
 - Schematic and high-density mixed-signal PCB layout spanning IMU, GNSS, barometer, magnetometer, RF and embedded compute (STM32, FPGA, CM5/RPi)
 - Multi-rail power architectures with redundancy and isolation for flight-critical hardware
@@ -39,13 +39,17 @@ Passionate about innovation and continuous professional growth, I thrive on tack
 - Trade-show production builds and on-site demos
 - Mentoring new graduate engineers on hardware and production processes
 
-**Electronics & Electrical Engineer**  
-*Praetorian Aeronautics* | November 2025 – January 2026  
-- Designed flight-critical avionics, power systems, sensor integration, and electrical architectures for next-generation unmanned and autonomous aerospace platforms  
-- Delivered high-reliability, Size Weight and Power (SWaP) optimized solutions in a fast-moving defense start-up environment  
+**Electrical & Electronics Engineer**  
+*Praetorian Aeronautics* | October 2025 – January 2026
+- Performed electronics and electrical design for autonomous UAS platforms, including interceptor and loitering munition systems
+- Focused on hardware design, contributing to avionics components for counter-UAS applications during a short-term engagement
+- Designed and reviewed wiring diagrams for platform-level electrical systems
+- Contributed to the design and development of Ground Control Station (GCS) electronics
+- Supported the development of high-power battery management and power distribution systems
+- Assisted with electronics integration, schematic capture, and PCB layout using industry-standard tools
 
 **Hardware & Software Design Engineer**  
-*SYPAQ Systems* | August 2020 – November 2025
+*SYPAQ Systems* | August 2020 – October 2025
 
 - Contributed to securing and delivering the LAND129/DEF129 4B project, ensuring compliance and timely execution.
 - Played a key role in the design and development for SYPAQ Systems Corvo family of Small Unmanned Aerial Systems (SUAS), guiding concepts from initial ideation through prototyping to production.
@@ -87,16 +91,21 @@ Passionate about innovation and continuous professional growth, I thrive on tack
 - Demonstrated embedded software development skills in Green Hills, Bare-metal, C, and C++, as well as Windows/ Linux application development using C#, Lua, Qt, and QML.
 
 
-**Junior Embedded Engineer**  
-*Fiberdyne Systems* | April 2016 - December 2017
+**AutoCAD Draftsman**  
+*Cleanrooms Australia* | April 2016 – December 2017
 
 - Translated handwritten engineering sketches and floor designs into precise technical engineering drawings, which ensured clarity and accuracy for various projects.
 - Collaborated with team members remotely to implement revisions and corrections, helping to maintain project timelines and enhance overall communication.
 - Developed detailed drafts that accurately reflected project specifications and requirements, supporting the execution of projects and ensuring client satisfaction.
 
 ## Education
-- **Bachelor of Engineering (Electrical & Electronics)** – RMIT University  
-- **Advanced Diploma of Engineering Technology (Electrical & Electronics)** – RMIT University  
+- **Bachelor of Engineering (Electrical & Electronics)** – RMIT University
+- **Advanced Diploma of Engineering Technology (Electrical & Electronics)** – RMIT University
+
+## Certifications
+- **Essential & Advanced SI, PI and EMC Design for Cost-Effective PCBs** – Keith Armstrong, EMC Technologies (March 2024)
+- **Industrial Robot Training** – Omron Automation and Robotics (March 2024)
+- **Remote Pilot License (RePL)** – Civil Aviation Safety Authority (CASA), 2022 – Current
 
 ## Leadership & Community Involvement
 
