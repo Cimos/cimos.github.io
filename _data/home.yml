@@ -24,6 +24,10 @@ project_entries:
     highlight: WIP
 
 old_project_entries:
+  - title: Dynamic Room Audio Correction (DRAC)
+    url: dynamic-room-audio-correction
+    desc: My 2018 final-year capstone — a real-time Kirkeby room-correction system on the ADSP-SC589 SHARC, with a Qt control app.
+
   - title: Mic Phantom Power Supply
     url: mic-phantom-power-supply
     desc: A standalone 48 V phantom power supply for condenser microphones. From the archives — 2017 vintage.
