@@ -27,10 +27,22 @@ Passionate about innovation and continuous professional growth, I thrive on tack
 
 ## Professional Experience
 
+**Electronics Engineer**  
+*Confidential* | February 2026 – Present
+- New-product hardware design and production support for a commercial UAV avionics manufacturer
+- Schematic and high-density mixed-signal PCB layout spanning IMU, GNSS, barometer, magnetometer, RF and embedded compute (STM32, FPGA, CM5/RPi)
+- Multi-rail power architectures with redundancy and isolation for flight-critical hardware
+- Bring-up, DVT and hardware debugging across CAN, CAN FD, USB, Ethernet, SPI, I2C and UART
+- DFM/DFT feedback into the in-house SMT line and supporting transition to low-volume production
+- Site bring-up of a new Australian production facility — coordinating trades, building works and external suppliers across SMT equipment, dispensing, fire compliance and on-site upgrades
+- Site-wide ESD program rollout — supplier evaluation, garment trials, controlled-area setup
+- Trade-show production builds and on-site demos
+- Mentoring new graduate engineers on hardware and production processes
+
 **Electronics & Electrical Engineer**  
-*Praetorian Aeronautics* | November 2025 – Present  
-- Designing flight-critical avionics, power systems, sensor integration, and electrical architectures for next-generation unmanned and autonomous aerospace platforms  
-- Delivering high-reliability, Size Weight and Power (SWaP) optimized solutions in a fast-moving defense start-up environment  
+*Praetorian Aeronautics* | November 2025 – January 2026  
+- Designed flight-critical avionics, power systems, sensor integration, and electrical architectures for next-generation unmanned and autonomous aerospace platforms  
+- Delivered high-reliability, Size Weight and Power (SWaP) optimized solutions in a fast-moving defense start-up environment  
 
 **Hardware & Software Design Engineer**  
 *SYPAQ Systems* | August 2020 – November 2025

@@ -10,6 +10,11 @@ project_entries:
     url: mechanical-keyboard-rabbit-hole
     desc: My journey into the world of custom mechanical keyboards.
 
+  - title: TODO List for the Lazy
+    url: todo-list
+    desc: A living list of what I'm working on, putting off, or pretending doesn't exist.
+    highlight: WIP
+
   # - title: Project 2
   #   url: overview-post
   #   desc: Projects are shown in card layout
