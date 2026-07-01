@@ -58,6 +58,19 @@ ul.horizontal-list {
   }
 }
 
+// Unreleased / teaser card: dashed, non-interactive
+.card.coming-soon {
+  border-style: dashed;
+
+  .header { color: var(--headings); }
+
+  &:hover {
+    border-color: var(--edge);
+    box-shadow: none;
+    transform: none;
+  }
+}
+
 /* Responsive cards - one column layout on small screens */
 @media screen and (max-width: 600px) {
   ul.horizontal-list li.card {

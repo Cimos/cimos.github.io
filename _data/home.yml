@@ -11,6 +11,10 @@ project_entries:
     repo: Cimos/KiCad-CustomDesignRules
     desc: KiCad 8 custom design rules that match JLCPCB and PCBWay manufacturing limits.
 
+  - title: Etchy
+    highlight: SOON
+    desc: A fast, trustworthy PCB diff tool built in Rust. Point it at two revisions of a board's fab output — Gerber, drill, pick-and-place — and it shows and measures every change, with a pass/fail gate for CI. CLI, desktop viewer, and a tiny container. Open source, first release landing soon.
+
   - title: Mad_RP2040
     url: madrp2040-anything-keypad
     repo: Cimos/Mad_RP2040
