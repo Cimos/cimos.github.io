@@ -297,9 +297,9 @@ h1.glitch::before, h1.glitch::after {
   inset: 0;
   clip-path: inset(0 0 0 0);
 }
-h1.glitch::before { color: var(--pink); z-index: -1; animation: glitch-a 5.2s infinite steps(1); }
-h1.glitch::after  { color: var(--blue); z-index: -1; animation: glitch-b 5.2s infinite steps(1); }
-h1.glitch:hover::before, h1.glitch:hover::after { animation-duration: 0.5s; }
+h1.glitch::before { color: var(--pink); z-index: -1; animation: glitch-a 2.4s infinite steps(1); }
+h1.glitch::after  { color: var(--blue); z-index: -1; animation: glitch-b 2.4s infinite steps(1); }
+h1.glitch:hover::before, h1.glitch:hover::after { animation-duration: 0.3s; }
 
 @keyframes glitch-a {
   0%,7%   { transform: translate(calc(-1px * var(--gx)), 0);   clip-path: inset(20% 0 55% 0); }
@@ -384,6 +384,63 @@ header ul.horizontal-list a:hover::after,
 footer ul.horizontal-list a:hover::after {
   right: 0;
 }
+
+// ------------- CARD EXTRAS: ext arrow + star pill ------------- //
+.card .ext {
+  color: var(--text-secondary);
+  font-size: 0.8em;
+  font-weight: 400;
+}
+.card .stars {
+  align-items: center;
+  gap: 0.3em;
+  font-family: "Roboto Mono", "Courier New", monospace;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #FFC24B;
+  background: color-mix(in srgb, #FFC24B 12%, transparent);
+  border: 1px solid color-mix(in srgb, #FFC24B 35%, var(--edge));
+  border-radius: 0.4em;
+  padding: 0.05em 0.5em;
+  margin-top: 0.6em;
+}
+.card .stars[hidden] { display: none; }
+.card .stars:not([hidden]) { display: inline-flex; }
+
+// ------------- COPY-CODE BUTTON ------------- //
+.highlight { position: relative; }
+.copy-code {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  font-family: "Roboto Mono", "Courier New", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  background: var(--bg-secondary);
+  border: 1px solid var(--edge);
+  border-radius: 0.35em;
+  padding: 0.2em 0.6em;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.highlight:hover .copy-code, .copy-code:focus { opacity: 1; }
+.copy-code:hover { color: var(--blue); border-color: var(--blue); }
+
+// ------------- HEADING ANCHORS ------------- //
+h2, h3, h4 { position: relative; }
+.anchor {
+  opacity: 0;
+  margin-left: 0.4em;
+  color: var(--links);
+  text-decoration: none;
+  font-weight: 400;
+  transition: opacity 0.15s ease;
+}
+h2:hover > .anchor, h3:hover > .anchor, h4:hover > .anchor { opacity: 0.55; }
+.anchor:hover, .anchor:focus { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
   h1.glitch::before, h1.glitch::after { animation: none; }

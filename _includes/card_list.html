@@ -1,26 +1,44 @@
 <ul class="horizontal-list">
   {% for item in include.collection %}
 
-    <li class="card">
-      <a href="{{ item.url }}">
-        <span class="header">
-          {{ item.title }}
+    {% capture card_inner %}
+      <span class="header">
+        {{ item.title }}
 
-          {% if item.highlight %}
-            <mark>{{ item.highlight }}</mark>
-          {% endif %}
-
-        </span>
-
-        <hr />
-
-        {% if item.desc != false %}
-        <p class="body">
-          {{ item.desc }}
-        </p>
+        {% if item.highlight %}
+          <mark>{{ item.highlight }}</mark>
         {% endif %}
-      </a>
-    </li>
+
+        {% unless item.url %}{% if item.href %}<span class="ext">↗</span>{% endif %}{% endunless %}
+      </span>
+
+      {% if item.repo %}
+        <span class="stars" data-repo="{{ item.repo }}" hidden>★ <span class="count"></span></span>
+      {% endif %}
+
+      <hr />
+
+      {% if item.desc != false %}
+      <p class="body">
+        {{ item.desc }}
+      </p>
+      {% endif %}
+    {% endcapture %}
+
+    {% if item.url or item.href %}
+      <li class="card">
+        <a href="{% if item.url %}{{ item.url | relative_url }}{% else %}{{ item.href }}{% endif %}"
+           {% unless item.url %}target="_blank" rel="noopener"{% endunless %}>
+          {{ card_inner }}
+        </a>
+      </li>
+    {% else %}
+      <li class="card coming-soon">
+        <div class="card-static">
+          {{ card_inner }}
+        </div>
+      </li>
+    {% endif %}
 
   {% endfor %}
 </ul>
