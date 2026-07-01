@@ -63,31 +63,48 @@ img {
   display: block;
   margin: 0 auto;
 }
+// -------------- JINX / ZAUN PALETTE -------------- //
 @mixin light-appearance {
   html, body {
-      --bg: #FFF;
-      --bg-secondary: #f3f4f6;
-      --headings: #1e293b;
-      --text: #374151;
-      --text-secondary: #6b7280;
-      --links: #6366f1;
-      --highlight: #FFECB2; // light yellow
-      --code-text: #9D174D;
-      --share-text: #999;
+      --bg: #F4F1FA;
+      --bg-secondary: #FFFFFF;
+      --panel-2: #F7F4FD;
+      --headings: #1B1530;
+      --text: #3A3350;
+      --text-secondary: #7A7392;
+      --links: #0E8FA6;
+      --highlight: #D6156A;
+      --code-text: #0E8FA6;
+      --share-text: #7A7392;
+      --border: #E2DCF0;
+      --edge: #E2DCF0;
+      --blue: #0E8FA6;
+      --pink: #D6156A;
+      --violet: #6D3BE0;
+      --glow: 0.35;
+      --gx: 0.55;
   }
 }
 // -------------- THEME SWITCHER -------------- //
 @mixin dark-appearance {
   html, body  {
-      --headings: #74c0fc;
-      --links: #91A7FF;
-      --highlight: #41C7C7;
-      --bg: #1f242A;
-      --bg-secondary: #323945;
-      --text: #adb5bd;
-      --text-secondary: #9CA3AF;
-      --code-text: #91A7FF;
-      --share-text: #C4C4C4;
+      --bg: #0B0912;
+      --bg-secondary: #15121F;
+      --panel-2: #1C1830;
+      --headings: #EDEAF6;
+      --text: #C9C4DA;
+      --text-secondary: #7E7897;
+      --links: #35D6EA;
+      --highlight: #FF2E88;
+      --code-text: #35D6EA;
+      --share-text: #7E7897;
+      --border: #2A2440;
+      --edge: #2A2440;
+      --blue: #35D6EA;
+      --pink: #FF2E88;
+      --violet: #9A6BFF;
+      --glow: 0.70;
+      --gx: 0.55;
   };
 }
 
@@ -95,10 +112,10 @@ html[data-theme="dark"] { @include dark-appearance; }
 html[data-theme="light"] { @include light-appearance; }
 
 @media (prefers-color-scheme: dark) {
-  body[data-theme="auto"] { @include dark-appearance; }
+  html[data-theme="auto"] { @include dark-appearance; }
 }
 @media (prefers-color-scheme: light) {
-  body[data-theme="auto"] { @include light-appearance; }
+  html[data-theme="auto"] { @include light-appearance; }
 }
   
 // -------------------------------------------- //
@@ -107,6 +124,30 @@ html, body {
     background-color: var(--bg);
     color: var(--text);
 }
+body {
+  background-image:
+    radial-gradient(60rem 40rem at 15% -10%, color-mix(in srgb, var(--violet) 14%, transparent), transparent 60%),
+    radial-gradient(50rem 40rem at 100% 0%, color-mix(in srgb, var(--pink) 10%, transparent), transparent 55%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  position: relative;
+}
+// faint Zaun grid haze
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--violet) 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--violet) 7%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(70rem 55rem at 30% 0%, #000 40%, transparent 85%);
+  mask-image: radial-gradient(70rem 55rem at 30% 0%, #000 40%, transparent 85%);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.5;
+}
+main.page-content { position: relative; z-index: 1; }
 h1, h2, h3, h4, h5, h6 {
     color: var(--headings);
 }
@@ -158,10 +199,15 @@ html.transition *:after {
   margin: 0.5em 0;
 }
 mark {
-  padding: 0.4em;
+  padding: 0.15em 0.5em;
   background-color: var(--highlight);
+  color: #0B0912;
+  font-family: "Roboto Mono", "Courier New", monospace;
+  font-weight: 700;
+  border-radius: 0.3em;
   font-size: 0.6em;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .post-date {
@@ -220,4 +266,126 @@ p code, li code {
   font-weight: bold;
   text-transform: lowercase;
   //border: 1px solid var(--text-secondary);
+}
+
+// ----------------- HERO ----------------- //
+.hero { padding: 1.5rem 0 0.5rem; }
+
+.eyebrow {
+  display: block;
+  font-family: "Roboto Mono", "Courier New", monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+}
+
+h1.glitch {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  color: var(--headings);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  text-shadow: 0 0 calc(22px * var(--glow)) color-mix(in srgb, var(--blue) 55%, transparent);
+}
+h1.glitch::before, h1.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 0);
+}
+h1.glitch::before { color: var(--pink); z-index: -1; animation: glitch-a 5.2s infinite steps(1); }
+h1.glitch::after  { color: var(--blue); z-index: -1; animation: glitch-b 5.2s infinite steps(1); }
+h1.glitch:hover::before, h1.glitch:hover::after { animation-duration: 0.5s; }
+
+@keyframes glitch-a {
+  0%,7%   { transform: translate(calc(-1px * var(--gx)), 0);   clip-path: inset(20% 0 55% 0); }
+  8%,100% { transform: translate(0,0); clip-path: inset(0 0 100% 0); }
+  3%      { transform: translate(calc(-2px * var(--gx)), 1px);  clip-path: inset(60% 0 15% 0); }
+  40%,42% { transform: translate(calc(2px * var(--gx)), -1px);  clip-path: inset(10% 0 70% 0); }
+  41%     { transform: translate(calc(-1px * var(--gx)), 1px);  clip-path: inset(45% 0 30% 0); }
+}
+@keyframes glitch-b {
+  0%,6%   { transform: translate(calc(1px * var(--gx)), 0);    clip-path: inset(55% 0 20% 0); }
+  7%,100% { transform: translate(0,0); clip-path: inset(100% 0 0 0); }
+  3%      { transform: translate(calc(2px * var(--gx)), -1px);  clip-path: inset(15% 0 60% 0); }
+  40%,42% { transform: translate(calc(-2px * var(--gx)), 1px);  clip-path: inset(70% 0 10% 0); }
+  41%     { transform: translate(calc(1px * var(--gx)), -1px);  clip-path: inset(30% 0 45% 0); }
+}
+
+.hero-tagline {
+  font-family: "Roboto Mono", "Courier New", monospace;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  margin: 0.5rem 0 1rem;
+}
+.hero-bio { max-width: 62ch; }
+
+.hero-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin-top: 1.6rem;
+}
+.btn {
+  font-family: "Roboto Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  color: var(--headings);
+  padding: 0.5rem 1.1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--edge);
+  background: var(--bg-secondary);
+  transition: all 0.18s ease;
+}
+.btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  box-shadow: 0 0 calc(16px * var(--glow)) color-mix(in srgb, var(--blue) 40%, transparent);
+  transform: translateY(-2px);
+}
+.btn.primary { border-color: color-mix(in srgb, var(--pink) 60%, var(--edge)); }
+.btn.primary:hover {
+  border-color: var(--pink);
+  color: var(--pink);
+  box-shadow: 0 0 calc(16px * var(--glow)) color-mix(in srgb, var(--pink) 45%, transparent);
+}
+
+// ------------- GLITCH-HOVER LINKS ------------- //
+.post-list-item a,
+header ul.horizontal-list a,
+footer ul.horizontal-list a {
+  position: relative;
+}
+.post-list-item a::after,
+header ul.horizontal-list a::after,
+footer ul.horizontal-list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: -2px;
+  height: 1px;
+  background: var(--pink);
+  transition: right 0.2s ease;
+}
+.post-list-item a:hover,
+header ul.horizontal-list a:hover,
+footer ul.horizontal-list a:hover {
+  color: var(--headings);
+  text-shadow: -1.5px 0 var(--pink), 1.5px 0 var(--blue);
+}
+.post-list-item a:hover::after,
+header ul.horizontal-list a:hover::after,
+footer ul.horizontal-list a:hover::after {
+  right: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  h1.glitch::before, h1.glitch::after { animation: none; }
+  html.transition, html.transition * { transition: none !important; }
 }

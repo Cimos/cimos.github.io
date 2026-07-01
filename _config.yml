@@ -1,4 +1,4 @@
-title: Dragon Hoard of Broken Dreams
+title: CMOS Foundry
 author: MadMan
 # url: https://www.abhinavsaxena.com/moonwalk # root address of the site
 url: https://cimos.github.io/ # root address of the site
@@ -16,13 +16,13 @@ twitter:
 remote_theme: abhinavs/moonwalk
 
 theme_config:
-  appearance: "dark" # can be "light", "dark" or "auto"
+  appearance: "auto" # can be "light", "dark" or "auto"
   appearance_toggle: true # if appearance can be switched by user
   back_home_text: "Back" 
   date_format: "%Y-%m-%d" # customize how date is formatted
   show_description: true # show blog description
   show_navbar: true # show horizontal navbar
-  show_footer: trueeccentric # show footer links in home page,add in _data/home.yml
+  show_footer: true # show footer links in home page,add in _data/home.yml
   show_copyright: true # show copyright notice in footer
   # following keys are using to create home layout
   show_projects: true # show projects as cards, add in _data/home.yml

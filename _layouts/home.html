@@ -8,10 +8,20 @@ layout: default
   <div class="dashed"></div>
 {% endif %}
 
-  <h1>{{ site.title }}</h1>
-  {% if site.theme_config.show_description == true %}
-    <p>{{ site.description }}</p>
-  {% endif %}
+  <div class="hero">
+    <span class="eyebrow">Simon Maddison · UAS Systems Engineer</span>
+    <h1 class="glitch" data-text="{{ site.title }}">{{ site.title }}</h1>
+    <p class="hero-tagline">// embedded · avionics · keyboards that clack in minor keys</p>
+    {% if site.theme_config.show_description == true %}
+      <p class="hero-bio">{{ site.description }}</p>
+    {% endif %}
+    <nav class="hero-socials">
+      <a class="btn primary" href="{{ '/about' | relative_url }}">→ About / CV</a>
+      {% for item in site.data.home.footer_entries %}
+        <a class="btn" href="{{ item.url }}">{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+  </div>
 </header>
 
 {{ content }}
