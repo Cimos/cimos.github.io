@@ -1,0 +1,60 @@
+<script>
+(function () {
+  // ---- live GitHub star counts on project cards ----
+  // Shows the pill only when a repo has real traction (>= 2 stars); links are always present.
+  var pills = document.querySelectorAll('.stars[data-repo]');
+  pills.forEach(function (el) {
+    var repo = el.getAttribute('data-repo');
+    var key = 'stars:' + repo;
+    var cached = null;
+    try { cached = JSON.parse(localStorage.getItem(key) || 'null'); } catch (e) {}
+    var now = Date.now();
+    if (cached && (now - cached.t) < 21600000) { // 6h cache
+      render(cached.n);
+      return;
+    }
+    fetch('https://api.github.com/repos/' + repo, { headers: { 'Accept': 'application/vnd.github+json' } })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (d) {
+        if (!d || typeof d.stargazers_count !== 'number') return;
+        try { localStorage.setItem(key, JSON.stringify({ n: d.stargazers_count, t: now })); } catch (e) {}
+        render(d.stargazers_count);
+      })
+      .catch(function () {});
+
+    function render(n) {
+      if (n < 2) return;
+      el.querySelector('.count').textContent = n;
+      el.hidden = false;
+    }
+  });
+
+  // ---- copy-code buttons + heading anchors (article pages only) ----
+  if (!document.querySelector('.post-title')) return;
+
+  document.querySelectorAll('.highlight').forEach(function (block) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy-code';
+    btn.textContent = 'copy';
+    btn.addEventListener('click', function () {
+      var code = block.querySelector('code');
+      var text = code ? code.innerText : block.innerText;
+      navigator.clipboard.writeText(text).then(function () {
+        btn.textContent = 'copied';
+        setTimeout(function () { btn.textContent = 'copy'; }, 1500);
+      });
+    });
+    block.appendChild(btn);
+  });
+
+  document.querySelectorAll('h2[id], h3[id], h4[id]').forEach(function (h) {
+    var a = document.createElement('a');
+    a.className = 'anchor';
+    a.href = '#' + h.id;
+    a.setAttribute('aria-label', 'Link to this section');
+    a.textContent = '#';
+    h.appendChild(a);
+  });
+})();
+</script>

@@ -2,11 +2,21 @@ title: CMOS Foundry
 author: MadMan
 # url: https://www.abhinavsaxena.com/moonwalk # root address of the site
 url: https://cimos.github.io/ # root address of the site
-description: "A barely-contained psychic meltdown from an eccentric introvert who hoards half-finished projects like a digital dragon on a mountain of cursed repositories, breathes compiler errors instead of fire, guards the sacred stash of TODO comments with autistic fury, and is secretly breeding an army of sentient keyboards that clack in minor keys and plot the violent overthrow of the cloud."
+# Crisp line used for search snippets and social cards (jekyll-seo-tag)
+description: "Simon Maddison — UAS systems engineer. Embedded electronics, UAV avionics, PCB design (KiCad & Altium), and mechanical keyboards."
+# Longer on-page intro shown in the homepage hero
+bio: "A barely-contained psychic meltdown from an eccentric introvert who hoards half-finished projects like a digital dragon on a mountain of cursed repositories, breathes compiler errors instead of fire, guards the sacred stash of TODO comments with autistic fury, and is secretly breeding an army of sentient keyboards that clack in minor keys and plot the violent overthrow of the cloud."
 
 permalink: /:slug
 
-favicon: "./logo.png" # relative path to site's favicon
+favicon: "/assets/images/favicon/favicon.svg" # relative path to site's favicon
+
+# Default social-share image for pages without their own
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /assets/images/og-default.png
 
 twitter:
     username: OneEyedMadMan # update or delete this
@@ -38,9 +48,6 @@ theme_config:
     title_blog: Blog
     title_old_projects: Archive
 
-soopr:
-  publish_token: "" # sign up at https://www.soopr.co to get your publish token and personalize share and reaction options
-
 highlighter: rouge
 
 sass:
@@ -49,3 +56,4 @@ sass:
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
+  - jekyll-sitemap

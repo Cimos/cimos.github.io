@@ -6,17 +6,44 @@ navbar_entries:
     url: blog
 
 project_entries:
+  - title: KiCad Custom Design Rules
+    href: https://github.com/Cimos/KiCad-CustomDesignRules
+    repo: Cimos/KiCad-CustomDesignRules
+    desc: KiCad 8 custom design rules that match JLCPCB and PCBWay manufacturing limits.
+
   - title: Mad_RP2040
     url: madrp2040-anything-keypad
+    repo: Cimos/Mad_RP2040
     desc: 4×4 backlit "anything keypad" built around the RP2040, with a full KiBot CI pipeline. Started as a 2-key controller test board.
+
+  - title: kitium
+    href: https://github.com/Cimos/kitium
+    repo: Cimos/kitium
+    desc: CI/CD gate that converts Altium PCB projects to KiCad and validates the output.
+
+  - title: KiCad DRU — VS Code Extension
+    url: vscode-kicad-dru-extension
+    repo: Cimos/vscode-kicad-dru
+    desc: Syntax highlighting and snippets for KiCad's `.kicad_dru` custom design rule files.
+
+  - title: kibot-config
+    href: https://github.com/Cimos/kibot-config
+    repo: Cimos/kibot-config
+    desc: Reusable KiBot configs that generate fabrication datapacks from KiCad projects.
+
+  - title: Altium → DigiKey
+    href: https://github.com/Cimos/Altium-Push-to-DigiKey
+    repo: Cimos/Altium-Push-to-DigiKey
+    desc: Pushes an Altium BOM to a DigiKey cart through their public API.
+
+  - title: iBOM for Altium
+    href: https://github.com/Cimos/interactivehtmlbom4altium2
+    repo: Cimos/interactivehtmlbom4altium2
+    desc: Generates an interactive HTML BOM from Altium Designer projects.
 
   - title: Corne Split Keyboard
     url: mechanical-keyboard-rabbit-hole
     desc: My journey into the world of custom mechanical keyboards.
-
-  - title: KiCad Custom Design Rules (VS Code)
-    url: vscode-kicad-dru-extension
-    desc: A small VS Code extension adding syntax highlighting and snippets for KiCad's `.kicad_dru` custom design rule files.
 
   - title: TODO List for the Lazy
     url: todo-list

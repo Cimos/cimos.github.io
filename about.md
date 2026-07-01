@@ -11,8 +11,8 @@ title: About Me
               width: 180px;
               height: auto;
               border-radius: 12px;
-              border: 3px solid #fff; 
-              box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+              border: 2px solid var(--blue);
+              box-shadow: 0 0 22px color-mix(in srgb, var(--blue) 40%, transparent);
               object-fit: cover;">
   <!-- This invisible spacer forces the gap even when GitHub Pages eats margins -->
   <div style="height: 0rem;"></div>

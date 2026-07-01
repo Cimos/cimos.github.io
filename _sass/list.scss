@@ -18,8 +18,9 @@ ul.horizontal-list {
 
 // ------------- CARD A: neon-border glow ------------- //
 .card {
-  flex: 1 1 calc(50% - 0.5rem);
-  min-width: 13em;
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 18em;
   padding: 1.1em 1.2em;
   border: 1px solid var(--edge);
   background-color: var(--bg-secondary);
@@ -30,6 +31,10 @@ ul.horizontal-list {
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 
   .header {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.3em 0.5em;
     color: var(--links);
     font-weight: 700;
   }
