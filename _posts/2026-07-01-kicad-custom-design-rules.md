@@ -8,44 +8,37 @@ tags: [kicad, kicad-dru, design-rules, drc, jlcpcb, pcbway, pcb, eda]
 
 ## Table of contents
 - [Overview](#overview)
-- [Why this exists](#why-this-exists)
-- [What's in it](#whats-in-it)
-- [How to use it](#how-to-use-it)
-- [How the rules are validated](#how-the-rules-are-validated)
-- [Caveats](#caveats)
+- [The check KiCad doesn't do](#the-check-kicad-doesnt-do)
+- [Rules that can't quietly rot](#rules-that-cant-quietly-rot)
+- [Using it](#using-it)
+- [The one gotcha](#the-one-gotcha)
 
 ## Overview
 
-A set of custom design rules for KiCad that match the manufacturing capabilities of common PCB fab houses. The rules live in `.kicad_dru` files and each set is validated against a paired test board (`.kicad_pcb`). Source: [Cimos/KiCad-CustomDesignRules](https://github.com/Cimos/KiCad-CustomDesignRules). MIT-licensed.
+KiCad's DRC will happily tell you your board is perfect. Your fab house may disagree. [Cimos/KiCad-CustomDesignRules](https://github.com/Cimos/KiCad-CustomDesignRules) is a set of `.kicad_dru` files that teach KiCad what a given manufacturer will actually accept — right now, JLCPCB and PCBWay. MIT-licensed, and by some distance the most-used thing I've put on GitHub, which tells you how common the problem is.
 
-This is the most-used thing I've put on GitHub, which tells you how much of a gap it fills.
+## The check KiCad doesn't do
 
-## Why this exists
+Default DRC checks that your board is internally consistent: nets don't short, clearances match the netclasses *you* set, courtyards don't overlap. What it has no opinion on is whether the 0.1 mm trace you just routed is below your fab's floor on their cheap process, or whether your annular ring survives their drill tolerance.
 
-KiCad's default DRC checks that your board is internally consistent. It does not know that JLCPCB wants a minimum 0.127 mm trace on their cheap process, or that PCBWay's annular ring floor is different again. Every fab publishes a capability table; almost nobody transcribes it into KiCad's custom-rules syntax, so boards get to the fab, fail review, and bounce back.
+Every fab publishes a capability table. Almost nobody transcribes it into KiCad's custom-rules syntax, because the syntax is fiddly and the table is long. So the board passes DRC, gets to the fab, fails their review, and bounces back with a note about minimum annular ring — usually after you've already paid and started waiting.
 
-These are that transcription — done once, checked, and reusable. Drop the right file in, run DRC, and the checker flags anything your chosen fab would reject before you pay for it.
+These files are that transcription, done once and checked, so the failure happens on your screen instead of in their inbox.
 
-## What's in it
+## Rules that can't quietly rot
 
-The rules are authored against the KiCad 8 custom-rules syntax and are forward-compatible with **KiCad 9 and 10**. There's a folder per fab:
+The failure mode for a project like this is subtle: KiCad changes a token, a rule silently stops matching anything, and the file still "passes" because it's now checking nothing. Green tick, zero coverage.
 
-- `JLCPCB/` — `JLCPCB.kicad_dru` plus its test board
-- `PCBWay/` — `PCBWay.kicad_dru` plus its test board
+So every fab folder ships its `.kicad_dru` next to a paired test board — a real `.kicad_pcb` with footprints placed to trip each rule on purpose. If a rule stops biting, the test board stops failing where it should, and that's caught. On top of that there's a Python linter for syntax and a headless KiCad 8+ command-line DRC pass, so the whole set is machine-verified rather than eyeballed. Authored against KiCad 8 syntax, forward-compatible with 9 and 10.
 
-Each fab folder ships the rule file alongside a matching `.kicad_pcb`, `.kicad_sch` and `.kicad_pro`, so the rules never exist without a board to prove them on.
+## Using it
 
-## How to use it
+Copy the relevant file into your project, rename it to match, then *Board Setup → Design Rules → Custom Rules*, and run the checker with **F8**. That's the whole workflow.
 
-1. Copy the relevant `.kicad_dru` into your project folder.
-2. Rename it to match your project name.
-3. Open *File → Board Setup → Design Rules → Custom Rules*.
-4. Run the checker with **F8** (or *Inspect → Design Rules Checker*).
+## The one gotcha
 
-## How the rules are validated
+A lot of rules ship with alternates commented out — different values for different layer counts or copper weights. Those aren't automatic. Pick the variant that matches the board you're actually ordering, and read the comments before you trust the result. A green tick against the wrong copper weight is just a different way to be wrong.
 
-Every rule has at least one footprint on the paired test board that passes or fails exactly as intended, so a rule that silently stops matching gets caught. On top of that there's a Python linter for CI syntax checking, and the boards run through KiCad 8+ headless command-line DRC — so the whole set is machine-verifiable, not just eyeballed.
+Found a capability the rules get wrong, or want a fab I haven't added? [Open an issue](https://github.com/Cimos/KiCad-CustomDesignRules/issues) — a fab's spec sheet plus a failing example is exactly what makes these better.
 
-## Caveats
-
-Many rules ship with alternates commented out for different layer counts or copper weights. Those aren't automatic — you pick the variant that matches the board you're actually ordering. Read the comments before you trust the green tick.
+-SM
