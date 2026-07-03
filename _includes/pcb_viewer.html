@@ -1,0 +1,106 @@
+{% comment %} 3D PCB viewer. include with model="/path.glb" for a real board, or model=true for the procedural placeholder. {% endcomment %}
+<figure class="pcb-viewer" data-model="{{ include.model }}">
+  <div class="pcb-loading">booting board…</div>
+  <div class="pcb-hint">drag to rotate · scroll to zoom</div>
+  <figcaption class="pcb-cap">{{ include.caption | default: "Interactive 3D — stylised placeholder until the real board model is dropped in." }}</figcaption>
+</figure>
+
+<script type="module">
+import * as THREE from '{{ "/assets/js/vendor/three.module.js" | relative_url }}';
+import { OrbitControls } from '{{ "/assets/js/vendor/OrbitControls.js" | relative_url }}';
+
+const host = document.querySelector('.pcb-viewer');
+const modelUrl = host.getAttribute('data-model');
+const useModel = modelUrl && /\.glb$/i.test(modelUrl);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+host.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(42, 16 / 10, 0.1, 100);
+camera.position.set(7, 5.5, 8);
+
+// lighting — neon rim in the Jinx palette
+scene.add(new THREE.AmbientLight(0x3a3358, 0.9));
+const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(5, 9, 6); scene.add(key);
+const cyan = new THREE.PointLight(0x35d6ea, 60, 40); cyan.position.set(-7, 3, 5); scene.add(cyan);
+const pink = new THREE.PointLight(0xff2e88, 45, 40); pink.position.set(7, 2, -5); scene.add(pink);
+
+const root = new THREE.Group(); scene.add(root);
+
+function buildProceduralBoard() {
+  // board
+  const board = new THREE.Mesh(
+    new THREE.BoxGeometry(5, 0.18, 5),
+    new THREE.MeshStandardMaterial({ color: 0x0d1b2a, roughness: 0.55, metalness: 0.2, emissive: 0x061018, emissiveIntensity: 0.4 })
+  );
+  root.add(board);
+
+  // neon underglow strip around the edge
+  const glow = new THREE.Mesh(
+    new THREE.BoxGeometry(5.25, 0.05, 5.25),
+    new THREE.MeshStandardMaterial({ color: 0x35d6ea, emissive: 0x35d6ea, emissiveIntensity: 2.2, roughness: 1 })
+  );
+  glow.position.y = -0.06; root.add(glow);
+
+  // 4x4 keycaps — this is the Mad_RP2040 anything-keypad
+  const capMat = new THREE.MeshStandardMaterial({ color: 0xd9d5e2, roughness: 0.7, metalness: 0.05 });
+  const accentMat = new THREE.MeshStandardMaterial({ color: 0xff2e88, roughness: 0.6, emissive: 0x3a0a1e, emissiveIntensity: 0.5 });
+  const step = 1.15, start = -1.5 * step;
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 4; c++) {
+    const cap = new THREE.Mesh(new THREE.BoxGeometry(0.92, 0.5, 0.92), (r === 3 && c === 0) ? accentMat : capMat);
+    cap.position.set(start + c * step, 0.45, start + r * step);
+    root.add(cap);
+  }
+
+  // USB-C notch
+  const usb = new THREE.Mesh(
+    new THREE.BoxGeometry(0.9, 0.28, 0.5),
+    new THREE.MeshStandardMaterial({ color: 0xb8bcc8, roughness: 0.35, metalness: 0.8 })
+  );
+  usb.position.set(0, 0.12, 2.6); root.add(usb);
+}
+
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; controls.dampingFactor = 0.08;
+controls.enablePan = false; controls.minDistance = 6; controls.maxDistance = 16;
+controls.maxPolarAngle = Math.PI * 0.52;
+controls.autoRotate = !reduce; controls.autoRotateSpeed = 1.1;
+controls.addEventListener('start', () => { controls.autoRotate = false; });
+
+function done() { const l = host.querySelector('.pcb-loading'); if (l) l.remove(); }
+
+if (useModel) {
+  import('{{ "/assets/js/vendor/GLTFLoader.js" | relative_url }}').then(({ GLTFLoader }) => {
+    new GLTFLoader().load(modelUrl, (gltf) => {
+      const obj = gltf.scene;
+      const box = new THREE.Box3().setFromObject(obj);
+      const size = box.getSize(new THREE.Vector3()), center = box.getCenter(new THREE.Vector3());
+      const scale = 5.5 / Math.max(size.x, size.y, size.z);
+      obj.scale.setScalar(scale);
+      obj.position.sub(center.multiplyScalar(scale));
+      root.add(obj); done();
+    }, undefined, () => { buildProceduralBoard(); done(); });
+  });
+} else { buildProceduralBoard(); done(); }
+
+function resize() {
+  const w = host.clientWidth, h = host.clientHeight;
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+}
+new ResizeObserver(resize).observe(host); resize();
+
+let running = false, raf;
+function loop() { controls.update(); renderer.render(scene, camera); raf = requestAnimationFrame(loop); }
+const io = new IntersectionObserver((es) => {
+  es.forEach((e) => {
+    if (e.isIntersecting && !running) { running = true; loop(); }
+    else if (!e.isIntersecting && running) { running = false; cancelAnimationFrame(raf); }
+  });
+}, { threshold: 0.05 });
+io.observe(host);
+</script>
