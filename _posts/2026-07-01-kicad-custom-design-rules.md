@@ -4,6 +4,7 @@ author: Simon Maddison
 title:  "KiCad Design Rules That Match Your Fab House"
 date:   2026-07-01
 tags: [kicad, kicad-dru, design-rules, drc, jlcpcb, pcbway, pcb, eda]
+image: /assets/images/og/kicad-custom-design-rules.png
 ---
 
 ## Table of contents

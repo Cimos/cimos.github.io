@@ -455,6 +455,64 @@ h2, h3, h4 { position: relative; }
 h2:hover > .anchor, h3:hover > .anchor, h4:hover > .anchor { opacity: 0.55; }
 .anchor:hover, .anchor:focus { opacity: 1; }
 
+// ------------- 404 ------------- //
+.notfound {
+  text-align: center;
+  padding: 3rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.notfound h1.glitch {
+  font-size: clamp(5rem, 22vw, 11rem);
+  margin: 0;
+}
+.notfound .btn { margin-top: 1.5rem; }
+
+// ------------- CLICKABLE TAGS ------------- //
+a.tag { text-decoration: none; transition: color 0.15s, border-color 0.15s; }
+a.tag:hover { color: var(--blue); }
+.tag-list { display: flex; flex-wrap: wrap; gap: 0.4em 0; margin-top: 0.5em; }
+.tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5em; margin: 1.5em 0 2em; }
+.tag-cloud a.tag:hover { box-shadow: 0 0 calc(12px * var(--glow)) color-mix(in srgb, var(--blue) 30%, transparent); }
+.tag-count { color: var(--pink); font-weight: 700; }
+.tag-heading { scroll-margin-top: 1em; }
+
+// ------------- POST NAV (prev / next) ------------- //
+.post-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--edge);
+}
+.post-nav a {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  max-width: 48%;
+  text-decoration: none;
+  padding: 0.7em 1em;
+  border: 1px solid var(--edge);
+  border-radius: 0.6em;
+  background: var(--bg-secondary);
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+.post-nav a:hover {
+  border-color: var(--blue);
+  box-shadow: 0 0 calc(16px * var(--glow)) color-mix(in srgb, var(--blue) 25%, transparent);
+  transform: translateY(-2px);
+}
+.post-nav .next { text-align: right; margin-left: auto; }
+.post-nav .dir {
+  font-family: "Roboto Mono", "Courier New", monospace;
+  font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.post-nav .ptitle { color: var(--links); font-size: 0.95rem; }
+
 @media (prefers-reduced-motion: reduce) {
   h1.glitch::before, h1.glitch::after { animation: none; }
   html.transition, html.transition * { transition: none !important; }

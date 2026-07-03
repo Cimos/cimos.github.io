@@ -4,6 +4,7 @@ author: Simon Maddison
 title:  "Building My First Split Keyboard: The Corne (CRKBD)"
 date:   2025-11-30
 tags: [rp2040, nice_nano, crkbd, mechanical-keyboard, kicad, pcb, qmk, zmk]
+image: /assets/images/og/mechanical-keyboard-rabbit-hole.png
 ---
 
 ## Table of contents

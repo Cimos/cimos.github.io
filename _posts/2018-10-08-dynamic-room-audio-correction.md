@@ -4,6 +4,7 @@ author: Simon Maddison
 title:  "Dynamic Room Audio Correction (DRAC) — My Final-Year Capstone"
 date:   2018-10-08
 tags: [dsp, sharc, adsp-sc589, kirkeby, room-correction, capstone, fiberdyne, qt, c++, matlab]
+image: /assets/images/og/dynamic-room-audio-correction.png
 ---
 
 ## Table of contents

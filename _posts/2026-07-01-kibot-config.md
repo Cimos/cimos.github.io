@@ -4,6 +4,7 @@ author: Simon Maddison
 title:  "kibot-config: One Push, a Full Fabrication Datapack"
 date:   2026-07-01
 tags: [kicad, kibot, github-actions, gerbers, bom, blender, panelization, ci-cd]
+image: /assets/images/og/kibot-config.png
 ---
 
 ## Table of contents

@@ -4,6 +4,7 @@ author: Simon Maddison
 title:  "An Interactive HTML BOM for Altium Designer"
 date:   2026-07-01
 tags: [altium, bom, interactive-html-bom, pcb, assembly, pascal]
+image: /assets/images/og/ibom-for-altium.png
 ---
 
 ## Table of contents

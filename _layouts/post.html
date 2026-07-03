@@ -6,3 +6,43 @@ layout: default
 <h1 class="post-title">{{ page.title }}</h1>
 {% include date_and_social_share.html %}
 {{ content }}
+
+{% comment %} related posts by shared tag {% endcomment %}
+{% if page.tags and page.tags.size > 0 %}
+  {% assign related = "" | split: "" %}
+  {% for tag in page.tags %}
+    {% assign tagged = site.tags[tag] %}
+    {% if tagged %}{% assign related = related | concat: tagged %}{% endif %}
+  {% endfor %}
+  {% assign related = related | where_exp: "p", "p.url != page.url" | uniq %}
+  {% if related.size > 0 %}
+    <div class="dashed"></div>
+    <h3>Related</h3>
+    <ul>
+      {% for p in related limit: 3 %}
+        <li class="post-list-item">
+          <span class="home-date">{{ p.date | date: site.theme_config.date_format }}»</span>
+          <a href="{{ p.url | relative_url }}">{{ p.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endif %}
+
+{% comment %} previous (older) / next (newer) post {% endcomment %}
+{% if page.previous or page.next %}
+  <nav class="post-nav">
+    {% if page.previous %}
+      <a class="prev" href="{{ page.previous.url | relative_url }}">
+        <span class="dir">← Older</span>
+        <span class="ptitle">{{ page.previous.title }}</span>
+      </a>
+    {% else %}<span></span>{% endif %}
+    {% if page.next %}
+      <a class="next" href="{{ page.next.url | relative_url }}">
+        <span class="dir">Newer →</span>
+        <span class="ptitle">{{ page.next.title }}</span>
+      </a>
+    {% endif %}
+  </nav>
+{% endif %}

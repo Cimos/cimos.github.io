@@ -4,6 +4,7 @@ author: Simon Maddison
 title:  "Altium → DigiKey: BOM to Cart in One Command"
 date:   2026-07-01
 tags: [altium, digikey, bom, python, procurement, automation]
+image: /assets/images/og/altium-push-to-digikey.png
 ---
 
 ## Table of contents
