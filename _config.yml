@@ -1,7 +1,7 @@
 title: CMOS Foundry
 author: MadMan
 # url: https://www.abhinavsaxena.com/moonwalk # root address of the site
-url: https://cimos.github.io/ # root address of the site
+url: https://cimos.github.io # root address of the site (no trailing slash)
 # Crisp line used for search snippets and social cards (jekyll-seo-tag)
 description: "Simon Maddison — UAS systems engineer. Embedded electronics, UAV avionics, PCB design (KiCad & Altium), and mechanical keyboards."
 # Longer on-page intro shown in the homepage hero
@@ -47,6 +47,13 @@ theme_config:
     title_misc_list: Details
     title_blog: Blog
     title_old_projects: Archive
+
+# Privacy-friendly visitor analytics (no cookies).
+# Sign up free at https://www.goatcounter.com, then put your site code here
+# (e.g. if your dashboard is cimos.goatcounter.com, set: goatcounter: "cimos").
+# Leave empty to disable. Only loads on the live (production) site.
+analytics:
+  goatcounter: ""
 
 highlighter: rouge
 

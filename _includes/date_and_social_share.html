@@ -17,15 +17,10 @@
 {% endif %}
 </p>
 
-<div class="soopr-btn"
-   data-twitter="SooprCo"
->
-</div>
-
 {% if site.theme_config.show_tags == true %}
-  <div class="">
+  <div class="tag-list">
     {% for tag in page.tags %}
-    <span class="tag">{{ tag }}</span>
+    <a class="tag" href="{{ '/tags' | relative_url }}#{{ tag | slugify }}">{{ tag }}</a>
     {% endfor %}
   </div>
 {% endif %}

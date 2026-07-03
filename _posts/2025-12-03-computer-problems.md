@@ -4,6 +4,7 @@ author: Simon Maddison
 title:  "Having Computer Problems"
 date:   2025-12-04
 tags: [pc,desktop,amd,motherboard]
+image: /assets/images/og/computer-problems.png
 ---
 
 ## Table of contents

@@ -4,6 +4,7 @@ author: Simon Maddison
 title:  "Mic Phantom Power Supply"
 date:   2017-10-15
 tags: [audio, phantom-power, analog, veroboard, power-supply]
+image: /assets/images/og/mic-phantom-power-supply.png
 ---
 
 ## Overview

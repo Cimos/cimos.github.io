@@ -4,6 +4,7 @@ author: Simon Maddison
 title:  "A Tiny VS Code Extension for KiCad Custom Design Rules"
 date:   2026-05-10
 tags: [kicad, vscode, kicad-dru, design-rules, pcb, eda, extension]
+image: /assets/images/og/vscode-kicad-dru-extension.png
 ---
 
 ## Table of contents
