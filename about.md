@@ -20,10 +20,76 @@ title: About Me
 
 # Hi, I’m Simon Maddison 👋
 
+<button type="button" class="btn primary no-print" onclick="window.print()">⤓ Save this page as PDF</button>
+
 ## UAS Systems Engineer — Electronics & Software
 
 Dynamic Electrical Engineer specializing in embedded systems, UAV avionics, and full-stack hardware-software integration for defense and aerospace applications.
 Passionate about innovation and continuous professional growth, I thrive on tackling complex challenges with enthusiasm while expanding my technical expertise. Effective communicator with a proven ability to build strong relationships and collaborate seamlessly.
+
+## Skills
+
+<div class="skills">
+  <div class="skill-group">
+    <h4>Hardware</h4>
+    <div class="tag-list">
+      <span class="tag">schematic capture</span>
+      <span class="tag">hd mixed-signal pcb</span>
+      <span class="tag">multi-rail power</span>
+      <span class="tag">emc / emi</span>
+      <span class="tag">si / pi</span>
+      <span class="tag">dfm / dft</span>
+      <span class="tag">bring-up & dvt</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <h4>Firmware &amp; Software</h4>
+    <div class="tag-list">
+      <span class="tag">stm32</span>
+      <span class="tag">bare-metal</span>
+      <span class="tag">freertos</span>
+      <span class="tag">chibios</span>
+      <span class="tag">c / c++</span>
+      <span class="tag">python</span>
+      <span class="tag">c# / qt</span>
+      <span class="tag">dsp (fxlms)</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <h4>Tools</h4>
+    <div class="tag-list">
+      <span class="tag">kicad</span>
+      <span class="tag">altium</span>
+      <span class="tag">kibot</span>
+      <span class="tag">git / ci-cd</span>
+      <span class="tag">blender</span>
+      <span class="tag">green hills</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <h4>Protocols</h4>
+    <div class="tag-list">
+      <span class="tag">can / can fd</span>
+      <span class="tag">usb 2.0</span>
+      <span class="tag">ethernet</span>
+      <span class="tag">spi</span>
+      <span class="tag">i²c</span>
+      <span class="tag">uart</span>
+      <span class="tag">most25 / a2b</span>
+    </div>
+  </div>
+  <div class="skill-group">
+    <h4>Domains</h4>
+    <div class="tag-list">
+      <span class="tag">uav avionics</span>
+      <span class="tag">gnss / imu</span>
+      <span class="tag">rf</span>
+      <span class="tag">fpga</span>
+      <span class="tag">counter-uas</span>
+      <span class="tag">production / smt</span>
+    </div>
+  </div>
+</div>
 
 ## Professional Experience
 
