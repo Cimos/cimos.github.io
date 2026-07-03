@@ -56,5 +56,11 @@
     a.textContent = '#';
     h.appendChild(a);
   });
+
+  // lazy-load + async-decode content images (article pages carry the heavy ones)
+  document.querySelectorAll('.page-content img').forEach(function (img) {
+    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+    if (!img.hasAttribute('decoding')) img.setAttribute('decoding', 'async');
+  });
 })();
 </script>
