@@ -5,6 +5,8 @@ title:  "MadRP2040: From a 2-Key Test Board to a 4×4 Anything Keypad"
 date:   2026-05-10
 tags: [rp2040, kicad, kibot, github-actions, mechanical-keyboard, pcb, sk6812mini, panelization]
 image: /assets/images/og/madrp2040-anything-keypad.png
+pcb3d: true
+pcb3d_caption: "Stylised 4×4 board — swap in the real Mad_RP2040 model when exported."
 ---
 
 ## Table of contents

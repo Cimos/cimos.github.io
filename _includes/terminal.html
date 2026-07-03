@@ -1,0 +1,180 @@
+{% comment %} Bootable site terminal — data is generated from Jekyll so it stays in sync. {% endcomment %}
+<button id="term-launch" class="term-launch no-print" type="button" aria-label="Open terminal (backtick)">
+  <span class="term-launch-p">~/cmos</span> $ <span class="term-launch-caret">_</span>
+</button>
+
+<div id="term" class="term-overlay no-print" hidden aria-hidden="true" role="dialog" aria-label="Terminal">
+  <div class="term-win">
+    <div class="term-bar">
+      <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-title">madsh — madman@cmos-foundry: ~</span>
+      <button class="term-close" type="button" aria-label="Close terminal">✕</button>
+    </div>
+    <div class="term-screen" id="term-screen"></div>
+    <div class="term-inputline">
+      <span class="term-prompt"><span class="u">madman</span><span class="m">@</span><span class="p">cmos-foundry</span><span class="m">:</span><span class="s">~</span><span class="m">$</span></span>
+      <input id="term-input" autocomplete="off" spellcheck="false" aria-label="terminal input">
+    </div>
+  </div>
+</div>
+
+<script>
+window.__CMOS__ = {
+  projects: [
+    {% for p in site.data.home.project_entries -%}
+    { name: {{ p.title | jsonify }}, slug: {{ p.title | slugify | jsonify }}, desc: {{ p.desc | jsonify }},
+      url: {% if p.url %}{{ p.url | relative_url | jsonify }}{% elsif p.href %}{{ p.href | jsonify }}{% else %}null{% endif %},
+      soon: {% if p.highlight == 'SOON' %}true{% else %}false{% endif %}, wip: {% if p.highlight == 'WIP' %}true{% else %}false{% endif %},
+      repo: {{ p.repo | jsonify }} }{% unless forloop.last %},{% endunless %}
+    {% endfor -%}
+  ],
+  archive: [
+    {% for p in site.data.home.old_project_entries -%}
+    { name: {{ p.title | jsonify }}, slug: {{ p.title | slugify | jsonify }}, desc: {{ p.desc | jsonify }},
+      url: {% if p.url %}{{ p.url | relative_url | jsonify }}{% else %}null{% endif %} }{% unless forloop.last %},{% endunless %}
+    {% endfor -%}
+  ],
+  posts: [
+    {% for p in site.posts -%}
+    { title: {{ p.title | jsonify }}, url: {{ p.url | relative_url | jsonify }}, date: {{ p.date | date: '%Y-%m-%d' | jsonify }} }{% unless forloop.last %},{% endunless %}
+    {% endfor -%}
+  ],
+  social: [
+    {% for s in site.data.home.footer_entries -%}
+    { name: {{ s.title | downcase | jsonify }}, url: {{ s.url | jsonify }} }{% unless forloop.last %},{% endunless %}
+    {% endfor -%}
+  ],
+  nav: { about: {{ '/about' | relative_url | jsonify }}, blog: {{ '/blog' | relative_url | jsonify }}, tags: {{ '/tags' | relative_url | jsonify }}, home: {{ '/' | relative_url | jsonify }} }
+};
+
+(function () {
+  var D = window.__CMOS__;
+  var overlay = document.getElementById('term');
+  var screen = document.getElementById('term-screen');
+  var input = document.getElementById('term-input');
+  var launch = document.getElementById('term-launch');
+  var PROMPT = '<span class="term-prompt"><span class="u">madman</span><span class="m">@</span><span class="p">cmos-foundry</span><span class="m">:</span><span class="s">~</span><span class="m">$</span></span> ';
+  var history = [], hi = -1, booted = false;
+
+  function out(html, cls) { var d = document.createElement('div'); d.className = 'tl ' + (cls || ''); d.innerHTML = html; screen.appendChild(d); screen.scrollTop = screen.scrollHeight; }
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  function pad(s, n) { s = String(s); return s + ' '.repeat(Math.max(0, n - s.length)); }
+  function allProjects() { return D.projects.concat(D.archive); }
+
+  var CMDS = {
+    help: function () {
+      out('available commands:', 'muted');
+      [['help','this list'],['ls [projects|posts|social]','list things'],['cat &lt;project&gt;','show a project'],
+       ['open &lt;target&gt;','github · x · linkedin · about · blog · tags · &lt;project&gt;'],['whoami','who is this'],
+       ['neofetch','system info'],['theme [dark|light|auto]','switch theme'],['history','recent commands'],['clear','clear screen']
+      ].forEach(function (r) { out('  <span class="blue">' + pad(r[0],28) + '</span> <span class="muted">' + r[1] + '</span>'); });
+    },
+    ls: function (a) {
+      var what = (a[0] || 'projects');
+      if (what.indexOf('post') === 0) { D.posts.forEach(function (p) { out('  <span class="muted">' + p.date + '</span>  <a href="' + p.url + '">' + esc(p.title) + '</a>'); }); return; }
+      if (what.indexOf('soc') === 0) { D.social.forEach(function (s) { out('  <span class="blue">' + pad(s.name,10) + '</span> <span class="muted">' + s.url + '</span>'); }); return; }
+      allProjects().forEach(function (p) {
+        var tag = p.soon ? ' <span class="soon">SOON</span>' : (p.wip ? ' <span class="soon">WIP</span>' : '');
+        out('  <span class="blue">' + pad(p.slug,26) + '</span> <span class="head">' + esc(p.name) + '</span>' + tag);
+      });
+      out('<span class="muted">→ cat &lt;name&gt; for detail</span>');
+    },
+    cat: function (a) {
+      var q = (a[0] || '').toLowerCase();
+      var p = allProjects().filter(Boolean).find(function (x) { return x.slug === q || x.slug.indexOf(q) === 0 || x.name.toLowerCase().indexOf(q) > -1; });
+      if (!p) { out('cat: ' + esc(q) + ': no such project. try <span class="blue">ls</span>', 'err'); return; }
+      out('<span class="head">' + esc(p.name) + '</span>' + (p.soon ? ' <span class="soon">SOON</span>' : ''));
+      out('<span class="muted">' + esc(p.desc) + '</span>');
+      if (p.url) out('<span class="muted">→</span> <a href="' + p.url + '">' + p.url + '</a>');
+      else out('<span class="muted">status:</span> <span class="pink">unreleased — landing soon</span>');
+    },
+    open: function (a) {
+      var t = (a[0] || '').toLowerCase();
+      var s = D.social.find(function (x) { return x.name === t || (t === 'twitter' && x.name === 'x'); });
+      if (s) { out('→ opening ' + s.url, 'ok'); window.open(s.url, '_blank', 'noopener'); return; }
+      if (D.nav[t]) { out('→ ' + D.nav[t], 'ok'); go(D.nav[t]); return; }
+      var p = allProjects().find(function (x) { return x.slug === t || x.slug.indexOf(t) === 0; });
+      if (p && p.url) { out('→ ' + p.url, 'ok'); /^https?:/.test(p.url) ? window.open(p.url, '_blank', 'noopener') : go(p.url); return; }
+      if (p && !p.url) { out('open: ' + esc(t) + ' is not public yet', 'err'); return; }
+      out('open: ' + esc(t) + ': unknown target', 'err');
+    },
+    whoami: function () {
+      out('<span class="head">Simon Maddison</span> <span class="muted">— UAS Systems Engineer (Electronics &amp; Software)</span>');
+      out('<span class="muted">Embedded · UAV avionics · PCB design (KiCad &amp; Altium) · mechanical keyboards.</span>');
+    },
+    neofetch: function () {
+      var logo = '   ▄████▄  \n  ██╔═══██╗ ▟▙\n  ██║   ██║▟  ▙\n  ██║   ██║▜  ▛\n  ╚██████╔╝ ▜▛\n   ╚═════╝';
+      var info = [['host','cimos.github.io'],['os','CMOS Foundry v1.0'],['kernel','Jekyll · Moonwalk (reforged)'],
+        ['shell','madsh'],['theme','Jinx / Zaun [neon]'],['editor','KiCad · Altium · VS Code'],
+        ['mcu','STM32 · RP2040 · FPGA'],['keyboard','Corne (CRKBD)'],['now','Etchy — a PCB diff tool in Rust']];
+      var h = '<div class="nf"><pre class="blue">' + logo + '</pre><div><div class="head">madman@cmos-foundry</div><div class="muted">-------------------</div>';
+      info.forEach(function (i) { h += '<div><span class="pink">' + pad(i[0],9) + '</span> ' + esc(i[1]) + '</div>'; });
+      h += '<div class="nf-sw">' + ['#0B0912','#35D6EA','#FF2E88','#9A6BFF','#57e389','#EDEAF6'].map(function (c) { return '<span style="background:' + c + '"></span>'; }).join('') + '</div></div></div>';
+      out(h);
+    },
+    theme: function (a) {
+      var m = (a[0] || '').toLowerCase();
+      if (['dark','light','auto'].indexOf(m) > -1) {
+        document.documentElement.setAttribute('data-theme', m);
+        try { localStorage.setItem('theme', m); } catch (e) {}
+        out('→ theme set to <span class="blue">' + m + '</span>', 'ok');
+      } else out('usage: theme [dark|light|auto]', 'muted');
+    },
+    history: function () { history.forEach(function (c, i) { out('  <span class="muted">' + pad(i + 1,3) + '</span>  ' + esc(c)); }); },
+    clear: function () { screen.innerHTML = ''; },
+    sudo: function () { out('madman is not in the sudoers file. This incident will be reported. 🐛', 'err'); },
+    echo: function (a) { out(esc(a.join(' '))); }
+  };
+
+  function go(url) { setTimeout(function () { window.location.href = url; }, 250); }
+
+  function run(raw) {
+    var cmd = raw.trim();
+    out(PROMPT + '<span class="cmd">' + esc(cmd) + '</span>');
+    if (!cmd) return;
+    history.push(cmd); hi = history.length;
+    var parts = cmd.split(/\s+/), name = parts.shift().toLowerCase();
+    var fn = CMDS[name];
+    if (fn) { try { fn(parts); } catch (e) { out('error: ' + esc(e), 'err'); } }
+    else out(esc(name) + ': command not found — type <span class="blue">help</span>', 'err');
+  }
+
+  function openTerm() {
+    overlay.hidden = false; overlay.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(function () { overlay.classList.add('open'); });
+    if (!booted) { out('<span class="blue">CMOS Foundry</span> <span class="muted">// madsh — type</span> <span class="blue">help</span> <span class="muted">· Esc to close</span>'); out(''); booted = true; }
+    setTimeout(function () { input.focus(); }, 60);
+  }
+  function closeTerm() { overlay.classList.remove('open'); overlay.setAttribute('aria-hidden', 'true'); setTimeout(function () { overlay.hidden = true; }, 200); }
+
+  var COMPLETIONS = Object.keys(CMDS);
+  input.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { run(input.value); input.value = ''; }
+    else if (e.key === 'ArrowUp') { if (hi > 0) { hi--; input.value = history[hi] || ''; } e.preventDefault(); }
+    else if (e.key === 'ArrowDown') { if (hi < history.length) { hi++; input.value = history[hi] || ''; } e.preventDefault(); }
+    else if (e.key === 'Tab') {
+      e.preventDefault();
+      var parts = input.value.split(/\s+/);
+      if (parts.length <= 1) { var m = COMPLETIONS.filter(function (c) { return c.indexOf(parts[0]) === 0; }); if (m.length === 1) input.value = m[0] + ' '; else if (m.length > 1) out('<span class="muted">' + m.join('  ') + '</span>'); }
+      else {
+        var base = parts[0].toLowerCase(), frag = parts[parts.length - 1].toLowerCase(), pool = [];
+        if (base === 'cat') pool = allProjects().map(function (p) { return p.slug; });
+        else if (base === 'open') pool = D.social.map(function (s) { return s.name; }).concat(Object.keys(D.nav), allProjects().map(function (p) { return p.slug; }));
+        else if (base === 'ls') pool = ['projects','posts','social'];
+        else if (base === 'theme') pool = ['dark','light','auto'];
+        var mm = pool.filter(function (x) { return x.indexOf(frag) === 0; });
+        if (mm.length === 1) { parts[parts.length - 1] = mm[0]; input.value = parts.join(' '); }
+        else if (mm.length > 1) out('<span class="muted">' + mm.join('  ') + '</span>');
+      }
+    }
+  });
+  launch.addEventListener('click', openTerm);
+  overlay.querySelector('.term-close').addEventListener('click', closeTerm);
+  overlay.addEventListener('mousedown', function (e) { if (e.target === overlay) closeTerm(); });
+  document.addEventListener('keydown', function (e) {
+    var typing = /^(input|textarea)$/i.test((document.activeElement || {}).tagName);
+    if (e.key === '`' && !overlay.classList.contains('open') && !typing) { e.preventDefault(); openTerm(); }
+    else if (e.key === 'Escape' && overlay.classList.contains('open')) closeTerm();
+  });
+})();
+</script>
