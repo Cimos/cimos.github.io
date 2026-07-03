@@ -8,49 +8,43 @@ tags: [altium, digikey, bom, python, procurement, automation]
 
 ## Table of contents
 - [Overview](#overview)
-- [How it works](#how-it-works)
-- [No auth, and the caveat that comes with it](#no-auth-and-the-caveat-that-comes-with-it)
-- [Install and use](#install-and-use)
-- [Limitations](#limitations)
+- [The dumb tedious step](#the-dumb-tedious-step)
+- [The trick: no auth at all](#the-trick-no-auth-at-all)
+- [Running it](#running-it)
+- [Know what you're trading](#know-what-youre-trading)
 
 ## Overview
 
-A small Python tool that takes an Altium BOM and turns it into a DigiKey shopping list. Source: [Cimos/Altium-Push-to-DigiKey](https://github.com/Cimos/Altium-Push-to-DigiKey). MIT-licensed.
+[Cimos/Altium-Push-to-DigiKey](https://github.com/Cimos/Altium-Push-to-DigiKey) takes an Altium BOM and turns it into a DigiKey shopping list you can open and buy. One command. MIT-licensed.
 
-## How it works
+## The dumb tedious step
 
-It reads a BOM emitted by Altium — either the raw CSV from a BOM Output Job, or the normalised JSON from a review-pack pipeline — and POSTs it to DigiKey's anonymous `mylists/api/thirdparty` endpoint. You get back a short URL (`https://www.digikey.com/short/<code>`) that you open in a browser to claim the list under your account.
+Between "the design is done" and "the parts are on order" sits a chore nobody enjoys: copying manufacturer part numbers out of a BOM and pasting them into a distributor cart, line by line, minding quantities and skipping the DNPs. It's ten boring minutes that's easy to get subtly wrong, and you do it every spin.
 
-Parsing is deliberately tolerant: it auto-detects headers (case-insensitive) for manufacturer part number, quantity, and designator, then skips `DNP` rows and anything with an empty MPN or zero quantity.
+This automates exactly that step and nothing more. It reads the BOM Altium already emits — either the raw CSV from a BOM Output Job or the normalised JSON from a review-pack pipeline — parses it tolerantly for part number, quantity and designator, skips `DNP` rows and anything with an empty MPN or zero quantity, and hands you back a link.
 
-## No auth, and the caveat that comes with it
+## The trick: no auth at all
 
-There are no API keys or OAuth to set up. The model is *anonymous on the way in, account-tied when you open the returned URL* — the same endpoint Digi-Key's own official KiCad plugin uses. A future authenticated direct-to-account mode (OAuth2, via DigiKey's Developer API) is on the roadmap so lists can land straight in your account without the shareable link.
+The neat part is there's nothing to set up. No API key, no OAuth dance. It POSTs to DigiKey's anonymous `mylists/api/thirdparty` endpoint — the same one Digi-Key's own official KiCad plugin uses — and gets back a short URL like `digikey.com/short/<code>`. You open that in a browser and the list drops into whatever account you're logged into. Anonymous on the way out, account-tied the moment you click. An authenticated direct-to-account mode over OAuth2 is on the list, but for the common case the no-auth path is the whole appeal.
 
-## Install and use
+## Running it
 
-Needs Python 3.8+.
+Python 3.8+, installed straight from the repo:
 
 ```bash
 pip install git+https://github.com/Cimos/Altium-Push-to-DigiKey.git
 ```
 
-That gives you an `altium-push-to-digikey` command. Typical runs:
+Then point it at a BOM. `--dry-run` parses and reports without sending; `--open` launches the browser for you; `--tags` labels the list.
 
-```bash
-# from review-pack JSON
-python digikey_push.py path\to\review-pack\bom.json
+## Know what you're trading
 
-# from raw CSV, with a name
-python digikey_push.py path\to\bom.csv --list-name "MyBoard rev B"
-```
+Convenience like this always costs something, so here's the bill, stated plainly:
 
-Useful flags: `--dry-run` (parse and report, don't POST), `--open` (launch the browser), `--tags "tag1,tag2"`.
+- The short URL is **link-shareable until you claim it** — anyone with the link can grab the list, so treat it like a secret.
+- The endpoint isn't formally documented as a public API, and there's no per-user authentication on the POST. It works because the official plugin uses it, not because DigiKey promised it would.
+- There's no compliance filtering. NDAA and any regulatory concerns are yours to handle upstream, before the parts ever reach this script.
 
-## Limitations
+None of that is a dealbreaker for ordering your own prototypes. It's worth knowing before you wire it into anything that matters.
 
-Worth knowing before you lean on it:
-
-- The returned short URL is **link-shareable until you claim it** — treat it like a secret.
-- The endpoint is not formally documented as a public API, and there's no per-user authentication on the POST.
-- No compliance filtering — NDAA and any regulatory concerns are yours to handle upstream.
+-SM

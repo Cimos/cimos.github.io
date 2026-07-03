@@ -8,35 +8,30 @@ tags: [altium, bom, interactive-html-bom, pcb, assembly, pascal]
 
 ## Table of contents
 - [Overview](#overview)
-- [What it does](#what-it-does)
-- [Two ways to run it](#two-ways-to-run-it)
-- [Output formats](#output-formats)
-- [Credit and license](#credit-and-license)
+- [Why hand-assembly needs this](#why-hand-assembly-needs-this)
+- [Standing on the OpenScopeProject's shoulders](#standing-on-the-openscopeprojects-shoulders)
+- [Getting it out of Altium](#getting-it-out-of-altium)
 
 ## Overview
 
-An interactive HTML BOM generator for Altium Designer — a self-contained page that lets you search components and visually correlate them with their placements on the board. Source: [Cimos/interactivehtmlbom4altium2](https://github.com/Cimos/interactivehtmlbom4altium2). MIT-licensed.
+[Cimos/interactivehtmlbom4altium2](https://github.com/Cimos/interactivehtmlbom4altium2) generates an interactive HTML BOM from an Altium Designer project — a single self-contained page where you can search a part and have its footprint light up on the board, and click a footprint to jump to its BOM row. MIT-licensed.
 
-If you've hand-assembled a dense board, you know why this matters: a clickable BOM that highlights the footprint beats squinting at a paper printout.
+## Why hand-assembly needs this
 
-## What it does
+If you've ever hand-populated a dense board, you know the loop: find the next line on the BOM, find that reference designator on the board, place the part, repeat two hundred times. On paper that means squinting between a printout and the PCB, losing your place, and occasionally soldering a 4.7k where the 47k goes.
 
-It reads PCB and schematic data through Altium Designer's Pascal script API and renders silkscreen, footprint pads, text, and drawings. Click a footprint on the board and it highlights the matching BOM row (and back the other way). Optional extras include tracks/zones and a netlist for dynamic net highlighting.
+An interactive BOM collapses that. Search or step through the list, the matching footprint highlights on a rendered board, and you never lose which parts are already down. For the KiCad crowd this has been a solved problem for years. Altium users have mostly been left doing it the paper way.
 
-Performance scales with density — roughly 5 seconds for 200 components, and around 50 seconds for 2000 densely-placed parts on a reasonably fast PC.
+## Standing on the OpenScopeProject's shoulders
 
-## Two ways to run it
+I didn't invent the good part here. The [InteractiveHtmlBom](https://github.com/openscopeproject/InteractiveHtmlBom) project by the OpenScopeProject is the tool everyone means when they say "iBOM," and its output format is the thing worth being compatible with. What was missing was the front half for Altium — the bit that reads the design and produces data in that shape.
 
-**As a script:** clone the repo, wire it into Altium per their scripting docs, and run it from the PCB layout — a GUI comes up for configuration.
+So this is that half. It pulls PCB and schematic data through Altium's Pascal scripting API, renders silkscreen, pads, text and drawings, and writes out HTML, a JS bundle, and JSON that matches the InteractiveHtmlBom schema — so it slots straight into the ecosystem that already exists. Optional tracks, zones and a netlist get you live net highlighting on top.
 
-**As an OutJob output:** add `InteractiveHTMLBOM4Altium2.pas` to your project, create a new Report Output in the OutJob, point it at the script, and generate it as part of your normal output run.
+It's quick enough to live in your workflow: roughly five seconds for a 200-component board, around fifty for a genuinely dense 2000-part one.
 
-## Output formats
+## Getting it out of Altium
 
-- **HTML** — a self-contained, dependency-free page
-- **JS** — a custom JavaScript file
-- **JSON** — matches the InteractiveHtmlBom schema, so it drops into that platform
+Two ways in, depending on how you work. Run it as a script from the PCB layout and a configuration GUI comes up — good for one-offs. Or add the `.pas` to an OutJob as a Report Output, and the interactive BOM gets generated as part of your normal output run, right next to the gerbers and the assembly drawings, every time.
 
-## Credit and license
-
-This extends the excellent [InteractiveHtmlBom](https://github.com/openscopeproject/InteractiveHtmlBom) by the OpenScopeProject, adapting the data-extraction side for Altium Designer. Written in Pascal and JavaScript, MIT-licensed.
+-SM
