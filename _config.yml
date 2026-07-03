@@ -53,7 +53,7 @@ theme_config:
 # (e.g. if your dashboard is cimos.goatcounter.com, set: goatcounter: "cimos").
 # Leave empty to disable. Only loads on the live (production) site.
 analytics:
-  goatcounter: ""
+  goatcounter: "madman"
 
 highlighter: rouge
 
