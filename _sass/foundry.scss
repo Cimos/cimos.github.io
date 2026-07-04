@@ -500,24 +500,18 @@ p code, li code {
   margin-bottom: 1rem;
 }
 
-// Small on-brand portrait in the hero — present, not front-and-centre.
-.hero-id {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-  margin-bottom: 0.5rem;
-}
-.hero-id .eyebrow { margin-bottom: 0; }
+// On-brand portrait: a background-removed cutout that dissolves into the hero.
+// No frame — the bottom fades out so it reads as part of the page, not a sticker.
 .hero-portrait {
-  flex: none;
-  width: 60px;
-  height: 60px;
-  margin: 0;
-  border-radius: 50%;
-  object-fit: cover;
-  object-position: 50% 32%;
-  border: 2px solid color-mix(in srgb, var(--blue) 50%, var(--edge));
-  box-shadow: 0 0 calc(16px * var(--glow)) color-mix(in srgb, var(--blue) 30%, transparent);
+  display: block;
+  width: 168px;
+  height: auto;
+  margin: 0 0 0.3rem -8px;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent 97%);
+  mask-image: linear-gradient(to bottom, #000 58%, transparent 97%);
 }
 
 .hero h1.glitch { font-size: clamp(2.6rem, 4.5vw, 3.8rem); margin: 0.15em 0 0.1em; }
