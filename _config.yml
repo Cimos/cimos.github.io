@@ -64,3 +64,16 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
+
+# Keep tooling/docs out of the published site
+exclude:
+  - node_modules
+  - scripts
+  - package.json
+  - package-lock.json
+  - CLAUDE.md
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - moonwalk.gemspec
+  - vendor
