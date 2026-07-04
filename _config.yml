@@ -1,6 +1,5 @@
 title: CMOS Foundry
 author: MadMan
-# url: https://www.abhinavsaxena.com/moonwalk # root address of the site
 url: https://cimos.github.io # root address of the site (no trailing slash)
 # Crisp line used for search snippets and social cards (jekyll-seo-tag)
 description: "Simon Maddison — UAS systems engineer. Embedded electronics, UAV avionics, PCB design (KiCad & Altium), and mechanical keyboards."
@@ -22,8 +21,6 @@ twitter:
     username: OneEyedMadMan # update or delete this
     card: summary_large_image
 
-#theme: moonwalk # if you are using GitHub Pages, change it to remote_theme: abhinavs/moonwalk
-remote_theme: abhinavs/moonwalk
 
 theme_config:
   appearance: "auto" # can be "light", "dark" or "auto"
@@ -64,3 +61,15 @@ plugins:
   - jekyll-feed
   - jekyll-seo-tag
   - jekyll-sitemap
+
+# Keep tooling/docs out of the published site
+exclude:
+  - node_modules
+  - scripts
+  - package.json
+  - package-lock.json
+  - CLAUDE.md
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor

@@ -1,0 +1,15 @@
+<header class="site-header">
+  <div class="hd">
+    <a class="brand" href="{{ '/' | relative_url }}" aria-label="Home">
+      <span class="u">~/cmos</span>&nbsp;<span class="s">$</span>&nbsp;<span class="t">{{ site.title }}</span><span class="caret">_</span>
+    </a>
+    <nav class="site-nav" aria-label="Site">
+      {% for item in site.data.home.navbar_entries %}
+        <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+    {% if site.theme_config.appearance_toggle %}
+      {% include toggle_theme_button.html %}
+    {% endif %}
+  </div>
+</header>

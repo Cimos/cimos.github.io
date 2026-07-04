@@ -2,14 +2,11 @@
 layout: default
 ---
 
-<header>
-{% if site.theme_config.show_navbar == true %}
-  {% include horizontal_list.html collection=site.data.home.navbar_entries %}
-  <div class="dashed"></div>
-{% endif %}
+{% assign flagship = site.data.home.project_entries | where: "flagship", true | first %}
 
+<section class="hero-grid">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero">
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
     <span class="eyebrow">Simon Maddison · UAS Systems Engineer</span>
     <h1 class="glitch" data-text="{{ site.title }}">{{ site.title }}</h1>
     <p class="hero-tagline">// embedded · avionics · keyboards that clack in minor keys</p>
@@ -23,34 +20,45 @@ layout: default
       {% endfor %}
     </nav>
   </div>
-</header>
+
+  <div class="hero-figure">
+    <img class="hero-portrait" src="{{ '/images/portrait.webp' | relative_url }}" alt="Simon Maddison" width="340" loading="eager">
+  </div>
+
+  {% if flagship %}
+  <aside class="flagship" aria-label="Flagship project">
+    <div class="fs-bar">
+      <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="fs-title">{{ flagship.title | downcase }} — {{ flagship.tagline }}</span>
+      {% if flagship.highlight %}<mark>{{ flagship.highlight }}</mark>{% endif %}
+    </div>
+    <div class="fs-body">
+      <pre class="fs-log">{% for line in flagship.log %}{% assign c = line | slice: 0 %}<span class="ln {% case c %}{% when '$' %}cmd{% when '✓' %}ok{% when 'Δ' %}chg{% when '✗' %}err{% endcase %}">{{ line }}</span>{% endfor %}</pre>
+      <p class="fs-desc">{{ flagship.desc }}</p>
+      {% if flagship.note %}<p class="fs-note">{{ flagship.note }}</p>{% endif %}
+    </div>
+  </aside>
+  {% endif %}
+</section>
 
 {{ content }}
 
 {% if site.theme_config.show_projects == true %}
-  <h2>{{ site.theme_config.home.title_projects }}</h2>
+  <h2 class="sec">{{ site.theme_config.home.title_projects }}</h2>
   {% include card_list.html collection=site.data.home.project_entries %}
 {% endif %}
 
 {% if site.theme_config.show_misc_list == true %}
-  <h2>{{ site.theme_config.home.title_misc_list }}</h2>
+  <h2 class="sec">{{ site.theme_config.home.title_misc_list }}</h2>
   {% include vertical_list.html collection=site.data.home.misc_entries %}
 {% endif %}
 
 {% if site.theme_config.show_blog == true %}
-  <h2>{{ site.theme_config.home.title_blog }}</h2>
+  <h2 class="sec">{{ site.theme_config.home.title_blog }}</h2>
   {% include post_list.html %}
 {% endif %}
 
 {% if site.theme_config.show_old_projects == true %}
-  <h2>{{ site.theme_config.home.title_old_projects | default: 'Archive' }}</h2>
+  <h2 class="sec">{{ site.theme_config.home.title_old_projects | default: 'Archive' }}</h2>
   {% include card_list.html collection=site.data.home.old_project_entries %}
-{% endif %}
-
-
-{% if site.theme_config.show_footer == true %}
-  <footer>
-    <div class="dashed"></div>
-    {% include horizontal_list.html collection=site.data.home.footer_entries %}
-  </footer>
 {% endif %}

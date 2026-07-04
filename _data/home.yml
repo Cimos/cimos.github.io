@@ -16,7 +16,17 @@ project_entries:
 
   - title: Etchy
     highlight: SOON
+    flagship: true
     desc: A fast, trustworthy PCB diff tool built in Rust. Point it at two revisions of a board's fab output — Gerber, drill, pick-and-place — and it shows and measures every change, with a pass/fail gate for CI. CLI, desktop viewer, and a tiny container. Open source, first release landing soon.
+    # extra fields for the homepage flagship panel (boot-readout style)
+    tagline: PCB diff you can trust, built in Rust
+    log:
+      - "$ etchy --format summary -- rev-A/ rev-B/"
+      - "✓ parsed   gerber · drill · pick-and-place"
+      - "Δ copper   2 changes on F.Cu, B.Cu"
+      - "Δ drill    1 added · Ø0.30 mm"
+      - "✗ gate     FAIL — clearance under limit"
+    note: Open source · CLI, desktop viewer, tiny container · first release soon
 
   - title: Mad_RP2040
     url: madrp2040-anything-keypad

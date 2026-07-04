@@ -1,3 +1,4 @@
 ---
 layout: home
+shell: wide
 ---

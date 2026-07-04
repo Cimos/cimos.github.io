@@ -1,5 +1,6 @@
-<ul class="horizontal-list">
+<ul class="card-grid">
   {% for item in include.collection %}
+    {% if item.flagship %}{% continue %}{% endif %}
 
     {% capture card_inner %}
       <span class="header">
