@@ -364,14 +364,37 @@ p code, li code {
 
 // ----------------- HERO ----------------- //
 .hero-grid {
+  position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: 2rem 3.5rem;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr) minmax(0, 1.08fr);
+  gap: 2rem 2.4rem;
   align-items: center;
   padding: 1.5rem 0 1rem;
 }
-@media screen and (max-width: 920px) {
-  .hero-grid { grid-template-columns: 1fr; }
+.hero-grid > .hero,
+.hero-grid > .hero-figure,
+.hero-grid > .flagship { position: relative; z-index: 1; }
+@media screen and (max-width: 980px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+  .hero-grid .hero-socials { justify-content: center; }
+  .hero-grid .hero-bio { margin-left: auto; margin-right: auto; }
+  .hero-grid .flagship { width: 100%; max-width: 30rem; text-align: left; }
+}
+
+// centre portrait figure
+.hero-figure {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.hero-figure .hero-portrait {
+  width: 100%;
+  max-width: 320px;
+  margin: 0;
 }
 
 // Flagship boot-readout panel (data: the `flagship: true` project entry)
@@ -514,7 +537,7 @@ p code, li code {
   mask-image: linear-gradient(to bottom, #000 58%, transparent 97%);
 }
 
-.hero h1.glitch { font-size: clamp(2.6rem, 4.5vw, 3.8rem); margin: 0.15em 0 0.1em; }
+.hero h1.glitch { font-size: clamp(2.2rem, 3.2vw, 3.1rem); margin: 0.15em 0 0.1em; }
 h1.glitch {
   position: relative;
   width: fit-content;

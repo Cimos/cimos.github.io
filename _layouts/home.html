@@ -5,9 +5,8 @@ layout: default
 {% assign flagship = site.data.home.project_entries | where: "flagship", true | first %}
 
 <section class="hero-grid">
+  <canvas id="hero-canvas" aria-hidden="true"></canvas>
   <div class="hero">
-    <canvas id="hero-canvas" aria-hidden="true"></canvas>
-    <img class="hero-portrait" src="{{ '/images/portrait.webp' | relative_url }}" alt="Simon Maddison" width="168" loading="eager">
     <span class="eyebrow">Simon Maddison · UAS Systems Engineer</span>
     <h1 class="glitch" data-text="{{ site.title }}">{{ site.title }}</h1>
     <p class="hero-tagline">// embedded · avionics · keyboards that clack in minor keys</p>
@@ -20,6 +19,10 @@ layout: default
         <a class="btn" href="{{ item.url }}">{{ item.title }}</a>
       {% endfor %}
     </nav>
+  </div>
+
+  <div class="hero-figure">
+    <img class="hero-portrait" src="{{ '/images/portrait.webp' | relative_url }}" alt="Simon Maddison" width="340" loading="eager">
   </div>
 
   {% if flagship %}
