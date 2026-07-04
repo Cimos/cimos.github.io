@@ -1,0 +1,14 @@
+{
+  "name": "cimos-github-io-tools",
+  "private": true,
+  "description": "Build-time asset tooling for cimos.github.io. Not part of the Jekyll build — run by hand when adding content. See scripts/README.md.",
+  "scripts": {
+    "og": "node scripts/generate-og.js",
+    "images": "node scripts/compress-images.js",
+    "icons": "node scripts/generate-icons.js"
+  },
+  "devDependencies": {
+    "png-to-ico": "^2.1.8",
+    "sharp": "^0.33.5"
+  }
+}
