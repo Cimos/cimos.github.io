@@ -4,7 +4,6 @@ title: Tags
 permalink: /tags
 ---
 
-<a href="{{ '/' | relative_url }}">{{ site.theme_config.back_home_text }}</a>
 <h1>Tags</h1>
 
 {% assign sorted = site.tags | sort %}

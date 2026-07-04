@@ -9,7 +9,7 @@ cyberpunk neon identity.
 ## Stack
 
 - **Jekyll 4** static site, deployed on **GitHub Pages** (default branch build from `master`).
-- Started on the Moonwalk remote theme, but **every layout/include/sass file is now overridden locally** — Moonwalk is effectively vestigial (see *Open threads* below).
+- **No theme.** Moonwalk has been fully removed — all layouts/includes/sass are local; the main stylesheet is `_sass/foundry.scss`.
 - Plugins: `jekyll-feed`, `jekyll-seo-tag`, `jekyll-sitemap`.
 - Fonts are **self-hosted** (Inter variable + Roboto Mono, latin subset) in `assets/fonts/` — no Google Fonts request.
 
@@ -19,6 +19,19 @@ cyberpunk neon identity.
 bundle install
 bundle exec jekyll serve      # http://localhost:4000
 ```
+
+No local Ruby? Build in Docker:
+
+```bash
+docker run --rm -v "$PWD":/site -w /site -e JEKYLL_ENV=development ruby:3.3 \
+  bash -c "bundle config set path vendor/bundle && bundle install && bundle exec jekyll build"
+python3 scripts/dev-server.py    # serves _site on http://localhost:4000
+```
+
+Development builds (`JEKYLL_ENV=development`) include a floating **feedback
+widget** (bottom-left, adapted from etchy's demo widget). `scripts/dev-server.py`
+serves `_site/` and collects `POST /feedback` into `.feedback/feedback.jsonl`
+(gitignored — contains IP/UA/names). Production builds never include the widget.
 
 The Node scripts in `scripts/` are **build-time tooling, not part of the Jekyll build** — run them by hand when needed (see below). They need `npm install` first.
 
@@ -32,7 +45,7 @@ _data/home.yml         nav, portfolio cards, archive cards, footer/social links
 _layouts/              default · home · post · blog
 _includes/             head, terminal, pcb_viewer, site_scripts, analytics,
                        card_list, date_and_social_share, post_list, …
-_sass/                 moonwalk.scss (main styles) · list.scss (cards) · syntax.scss
+_sass/                 foundry.scss (main styles) · list.scss (cards) · syntax.scss
 _posts/                blog posts (Markdown)
 assets/fonts/          self-hosted woff2
 assets/images/og/      per-post social cards (generated — see scripts/)
@@ -139,9 +152,6 @@ Not run by Jekyll — run manually after `npm install`:
 
 - ⚠️ **OG cards are not automatic.** New posts need `npm run og` (there is no
   build-time hook yet — see *CI + auto-OG* below).
-- **Moonwalk is dead weight.** `remote_theme` is still declared but nothing
-  depends on it; `moonwalk.gemspec`, `_screenshots/`, `_examples/`,
-  `moonwalk_on_windows.md`, `github_pages.md` are leftover theme-repo files.
 - `site.url` has **no trailing slash** (keeps absolute URLs from doubling up).
 - Images are large photos — keep them run through `npm run images`.
 
@@ -149,12 +159,11 @@ Not run by Jekyll — run manually after `npm install`:
 
 ## Open threads (state as of this commit)
 
-1. **Layout redesign — decision pending.** Review concluded the single 720px
-   column is the weak point (no header, no hierarchy, blog as bare bullets).
-   A restructured homepage was mocked up (sticky header, two-column hero with a
-   featured-flagship panel, wider project grid, styled blog rows). **Not yet
-   built.** Recommendation: drop Moonwalk, stay on Jekyll, build the new layout.
-   Astro migration considered but not needed.
+1. **Layout redesign — DONE.** Moonwalk dropped; homepage restructured: sticky
+   header, two-column hero with the flagship boot-readout panel (data-driven from
+   the `flagship: true` entry in `_data/home.yml`), project card grid, styled blog
+   rows, real footer. Reading pages keep a ~47rem prose measure; the homepage uses
+   `shell: wide` front matter for the 74rem shell.
 2. **CI + auto-OG — queued.** A GitHub Actions workflow to build, link-check
    (html-proofer), and auto-generate OG cards so new posts never miss one.
 3. **Etchy** — teased on the portfolio with a SOON badge; flip to a real card +

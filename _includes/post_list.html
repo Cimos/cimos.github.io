@@ -1,11 +1,10 @@
 {% if site.posts.size > 0 %}
-  <ul>
+  <ul class="post-rows">
     {% for post in site.posts %}
-      <li class="post-list-item">
-        <span class="home-date">
-          {{ post.date | date: site.theme_config.date_format }}»
-        </span>
+      <li class="post-row post-list-item">
+        <span class="home-date">{{ post.date | date: site.theme_config.date_format }}</span>
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        {% if post.tags.size > 0 %}<span class="row-tags">{% for t in post.tags limit: 2 %}<span class="tag">{{ t }}</span>{% endfor %}</span>{% endif %}
       </li>
     {% endfor %}
   </ul>

@@ -5,3 +5,7 @@
 _site
 node_modules
 package-lock.json
+
+# local review feedback (may contain PII) — never commit
+.feedback/
+vendor/

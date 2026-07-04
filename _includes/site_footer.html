@@ -1,0 +1,14 @@
+<footer class="site-footer">
+  <div class="ft">
+    <span class="copyright">
+      {%- if site.theme_config.show_copyright == true -%}
+      &copy;&nbsp;{{ "now" | date: "%Y" }}&nbsp;{{ site.author }}
+      {%- endif -%}
+    </span>
+    <nav class="footer-nav" aria-label="Social">
+      {% for item in site.data.home.footer_entries %}
+        <a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>
+      {% endfor %}
+    </nav>
+  </div>
+</footer>

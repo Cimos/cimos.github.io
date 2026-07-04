@@ -83,3 +83,16 @@ ul.horizontal-list {
     }
   }
 }
+
+// ------------- CARD GRID (portfolio / archive) ------------- //
+ul.card-grid {
+  list-style: none;
+  padding: 0;
+  margin: 1.2rem 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 1.1rem;
+}
+ul.card-grid .card { display: flex; flex-direction: column; margin: 0; }
+ul.card-grid .card > a, ul.card-grid .card .card-static { flex: 1; }
+.card a { text-decoration: none; display: block; height: 100%; }
