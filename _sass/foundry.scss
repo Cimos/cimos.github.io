@@ -799,8 +799,12 @@ h2:hover > .anchor, h3:hover > .anchor, h4:hover > .anchor { opacity: 0.55; }
   backdrop-filter: blur(3px);
   opacity: 0;
   transition: opacity 0.2s ease;
+  pointer-events: none; // don't capture clicks while closed (only .open does)
 }
-.term-overlay.open { opacity: 1; }
+// The `hidden` attribute must win over display:flex, or the invisible closed
+// overlay stays in the layout and swallows every click on the page.
+.term-overlay[hidden] { display: none; }
+.term-overlay.open { opacity: 1; pointer-events: auto; }
 .term-win {
   width: 100%; max-width: 820px;
   max-height: 82vh; display: flex; flex-direction: column;
