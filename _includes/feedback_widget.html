@@ -27,8 +27,14 @@
 #etfb-text{width:100%;min-height:64px;background:var(--panel-2,#1C1830);color:var(--text,#C9C4DA);border:1px solid var(--edge,#2A2440);border-radius:8px;padding:9px 10px;font:13.5px/1.5 inherit;resize:vertical}
 .etfb-name{width:100%;background:var(--panel-2,#1C1830);color:var(--text,#C9C4DA);border:1px solid var(--edge,#2A2440);border-radius:8px;padding:8px 10px;font:13.5px inherit;margin-top:10px}
 .etfb-ctx{margin-top:11px;font-size:11px;color:var(--text-secondary,#7E7897);border-top:1px dashed var(--edge,#2A2440);padding-top:9px}
+.etfb-thumbs{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.etfb-thumb{position:relative;width:52px;height:52px;border-radius:6px;overflow:hidden;border:1px solid var(--edge,#2A2440)}
+.etfb-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.etfb-thumb button{position:absolute;top:1px;right:1px;width:16px;height:16px;line-height:14px;border:0;border-radius:50%;background:rgba(0,0,0,.72);color:#fff;font-size:11px;cursor:pointer;padding:0}
 .etfb-send{width:100%;margin-top:12px;border:0;border-radius:8px;background:var(--pink,#FF2E88);color:#0B0912;font-weight:800;padding:11px;font-size:14px;cursor:pointer}
 .etfb-send:disabled{opacity:.6;cursor:default}
+.etfb-shorts{font-size:11px;color:var(--text-secondary,#7E7897);text-align:center;margin:8px 0 0}
+.etfb-shorts b{color:var(--blue,#35D6EA)}
 #etfb-toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(8px);z-index:2147483002;
   background:#10331f;border:1px solid #57e389;color:#bff5e0;padding:10px 18px;border-radius:8px;font:600 13px/1 "Inter","Segoe UI",sans-serif;
   opacity:0;pointer-events:none;transition:.2s}
@@ -56,15 +62,17 @@
       <label class="etfb-l">Tell me more</label>
       <textarea id="etfb-text" placeholder="What's not working? e.g. the hero panel overlaps on mobile"></textarea>
       <input id="etfb-name" class="etfb-name" placeholder="Your name or initials (optional)">
+      <div class="etfb-thumbs" id="etfb-thumbs"></div>
       <div class="etfb-ctx" id="etfb-ctx"></div>
       <button class="etfb-send" id="etfb-send" onclick="etfbSend()">Send feedback</button>
+      <p class="etfb-shorts">Paste a screenshot with <b>Ctrl+V</b> · send with <b>Ctrl+Enter</b></p>
     </div>
   </div>
   <div id="etfb-toast"></div>
 </div>
 <script>
 (function(){
-  var sentiment='issue', category='Layout & sizing', severity='Annoying';
+  var sentiment='issue', category='Layout & sizing', severity='Annoying', shots=[];
   var ph={love:"What's working well? What do you like?",
           issue:"What's not working? e.g. the hero panel overlaps on mobile",
           idea:"What would you add or change?"};
@@ -85,14 +93,31 @@
     [].forEach.call(this.children,function(p){p.classList.remove('on');});e.target.classList.add('on');category=e.target.textContent.trim();}});
   el('etfb-sev').addEventListener('click',function(e){if(e.target.classList.contains('etfb-s')){
     [].forEach.call(this.children,function(p){p.classList.remove('on');});e.target.classList.add('on');severity=e.target.textContent.trim();}});
+  // pasted-screenshot thumbnails
+  function renderThumbs(){var c=el('etfb-thumbs');c.innerHTML='';shots.forEach(function(d,i){
+    var t=document.createElement('div');t.className='etfb-thumb';
+    var img=document.createElement('img');img.src=d;
+    var x=document.createElement('button');x.type='button';x.title='Remove';x.textContent='×';x.setAttribute('data-i',i);
+    t.appendChild(img);t.appendChild(x);c.appendChild(t);});}
+  el('etfb-thumbs').addEventListener('click',function(e){var b=e.target.closest('button');
+    if(b){shots.splice(+b.getAttribute('data-i'),1);renderThumbs();}});
+  var panel=el('etfb-panel');
+  panel.addEventListener('paste',function(e){var items=(e.clipboardData||{}).items||[];
+    for(var i=0;i<items.length;i++){var it=items[i];
+      if(it.type&&it.type.indexOf('image')===0){var f=it.getAsFile();if(f){
+        var r=new FileReader();r.onload=function(ev){shots.push(ev.target.result);renderThumbs();};
+        r.readAsDataURL(f);e.preventDefault();}}}});
+  panel.addEventListener('keydown',function(e){
+    if((e.ctrlKey||e.metaKey)&&e.key==='Enter'){e.preventDefault();etfbSend();}});
   function done(ok){etfbClose();el('etfb-text').value='';el('etfb-name').value='';el('etfb-text').style.borderColor='';
+    if(ok){shots=[];renderThumbs();}
     var t=el('etfb-toast');t.textContent=ok?'✓ Thanks — sent!':"⚠ Couldn't send — is dev-server.py running?";
     t.style.borderColor=ok?'#57e389':'#e8b34a';t.style.color=ok?'#bff5e0':'#f0d49a';t.style.background=ok?'#10331f':'#33270f';
     t.classList.add('show');setTimeout(function(){t.classList.remove('show');},2800);}
   window.etfbSend=function(){var text=el('etfb-text').value.trim();
     if(!text){el('etfb-text').focus();el('etfb-text').style.borderColor='#e8b34a';return;}
     var payload={sentiment:sentiment,category:category,severity:(sentiment==='issue'?severity:null),
-      text:text,name:el('etfb-name').value.trim(),ctx:ctx()};
+      text:text,name:el('etfb-name').value.trim(),screenshots:shots.slice(),ctx:ctx()};
     var b=el('etfb-send');b.disabled=true;b.textContent='Sending…';
     fetch('/feedback',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
       .then(function(r){if(!r.ok)throw 0;done(true);}).catch(function(){done(false);})
