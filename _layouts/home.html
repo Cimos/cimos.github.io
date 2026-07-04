@@ -7,7 +7,10 @@ layout: default
 <section class="hero-grid">
   <div class="hero">
     <canvas id="hero-canvas" aria-hidden="true"></canvas>
-    <span class="eyebrow">Simon Maddison · UAS Systems Engineer</span>
+    <div class="hero-id">
+      <img class="hero-portrait" src="{{ '/images/avatar.jpg' | relative_url }}" alt="Simon Maddison" width="64" height="64" loading="eager">
+      <span class="eyebrow">Simon Maddison · UAS Systems Engineer</span>
+    </div>
     <h1 class="glitch" data-text="{{ site.title }}">{{ site.title }}</h1>
     <p class="hero-tagline">// embedded · avionics · keyboards that clack in minor keys</p>
     {% if site.theme_config.show_description == true %}
