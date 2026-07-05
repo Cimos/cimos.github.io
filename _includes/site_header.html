@@ -8,6 +8,11 @@
         <a href="{{ item.url | relative_url }}">{{ item.title }}</a>
       {% endfor %}
     </nav>
+    <nav class="site-social" aria-label="Social links">
+      {% for item in site.data.home.footer_entries %}
+        <a href="{{ item.url }}" target="_blank" rel="noopener">{{ item.title }}</a>
+      {% endfor %}
+    </nav>
     {% if site.theme_config.appearance_toggle %}
       {% include toggle_theme_button.html %}
     {% endif %}
