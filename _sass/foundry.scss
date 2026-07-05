@@ -244,6 +244,48 @@ html.transition *:after {
   text-transform: uppercase;
   text-decoration: none;
 }
+// social links live in the top bar, set off from the nav by a hairline
+.site-social {
+  display: flex;
+  gap: 1.1rem;
+  padding-left: 1.3rem;
+  margin-left: 0.2rem;
+  border-left: 1px solid var(--edge);
+}
+.site-social a {
+  font-family: "Roboto Mono", "Courier New", monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  color: var(--text-secondary);
+}
+.site-social a:hover { color: var(--links); }
+@media screen and (max-width: 640px) {
+  .site-social { display: none; }   // keep the mobile bar uncluttered; socials remain in the footer
+}
+
+// "View on GitHub" button on project write-ups
+.repo-cta { margin: 0.4rem 0 1.4rem; }
+.gh-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-family: "Roboto Mono", "Courier New", monospace;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: var(--headings);
+  background: var(--bg-secondary);
+  border: 1px solid var(--edge);
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  transition: border-color 0.18s, color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+.gh-button:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  box-shadow: 0 0 calc(16px * var(--glow)) color-mix(in srgb, var(--blue) 35%, transparent);
+  transform: translateY(-2px);
+}
 
 // ----------------- SITE FOOTER ----------------- //
 .site-footer {
@@ -421,11 +463,11 @@ p code, li code {
 .fs-body { padding: 0.9rem 1.1rem 1rem; }
 .fs-log {
   margin: 0 0 0.9rem;
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   line-height: 1.75;
-  overflow-x: auto;
+  overflow: hidden;   // decorative readout — no scrollbar; lines are sized to fit
 }
-.fs-log .ln { display: block; color: var(--text-secondary); }
+.fs-log .ln { display: block; color: var(--text-secondary); white-space: nowrap; }
 .fs-log .ln.cmd { color: var(--headings); }
 .fs-log .ln.ok  { color: #57e389; }
 .fs-log .ln.chg { color: var(--blue); }

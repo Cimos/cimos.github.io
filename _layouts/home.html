@@ -14,10 +14,8 @@ layout: default
       <p class="hero-bio">{{ site.bio | default: site.description }}</p>
     {% endif %}
     <nav class="hero-socials">
-      <a class="btn primary" href="{{ '/about' | relative_url }}">→ About / CV</a>
-      {% for item in site.data.home.footer_entries %}
-        <a class="btn" href="{{ item.url }}">{{ item.title }}</a>
-      {% endfor %}
+      <a class="btn primary" href="{{ '/about' | relative_url }}">→ Read the CV</a>
+      <a class="btn" href="{{ '/blog' | relative_url }}">Blog</a>
     </nav>
   </div>
 
