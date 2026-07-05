@@ -46,8 +46,14 @@ function ogSvg(title) {
 </svg>`;
 }
 
+// By default only generate cards that are MISSING, so re-runs are a no-op and
+// CI never churns existing cards (sharp/font differences across machines would
+// otherwise re-encode every PNG). Pass --force to regenerate all (e.g. after a
+// template change).
 (async () => {
+  const force = process.argv.includes('--force');
   const files = fs.readdirSync(POSTS).filter((f) => f.endsWith('.md'));
+  let generated = 0, injected = 0;
   for (const f of files) {
     const full = path.join(POSTS, f);
     let src = fs.readFileSync(full, 'utf8');
@@ -56,12 +62,18 @@ function ogSvg(title) {
     const titleM = fm[1].match(/^title:\s*"?(.+?)"?\s*$/m);
     const title = titleM ? titleM[1] : f;
     const slug = f.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '');
-    await sharp(Buffer.from(ogSvg(title))).png().toFile(path.join(OGDIR, `${slug}.png`));
+    const cardPath = path.join(OGDIR, `${slug}.png`);
+    if (force || !fs.existsSync(cardPath)) {
+      await sharp(Buffer.from(ogSvg(title))).png().toFile(cardPath);
+      generated++;
+      console.log('og:', slug, force ? '(regenerated)' : '(new)');
+    }
     if (!/^image:\s*/m.test(fm[1])) {
       src = src.replace(/^(---\n[\s\S]*?\n)(---)/, (m, body, end) => body + `image: /assets/images/og/${slug}.png\n` + end);
       fs.writeFileSync(full, src);
+      injected++;
+      console.log('inject image:', slug);
     }
-    console.log('og:', slug);
   }
-  console.log(`done — ${files.length} posts`);
+  console.log(`done — ${files.length} posts, ${generated} card(s) generated, ${injected} front-matter line(s) injected`);
 })().catch((e) => { console.error(e); process.exit(1); });
