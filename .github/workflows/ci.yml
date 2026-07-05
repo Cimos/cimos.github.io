@@ -1,0 +1,77 @@
+name: CI
+
+# Build + link-check on every PR and master push. Auto-generates missing OG
+# social cards and, on PRs, commits them back so nothing ships without one.
+# GitHub's automatic Pages build still owns deployment — this workflow does not deploy.
+
+on:
+  pull_request:
+    branches: [master]
+  push:
+    branches: [master]
+
+permissions:
+  contents: write   # for the OG commit-back on PRs
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # On a PR, check out the head branch (not the detached merge ref) so the
+          # OG commit-back can push. Empty on push events → default checkout.
+          ref: ${{ github.head_ref }}
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install OG tooling
+        run: npm install
+
+      - name: Generate OG cards
+        run: npm run og
+
+      - name: Commit generated cards back (PR only)
+        if: github.event_name == 'pull_request'
+        env:
+          # Pass via env (not inline ${{ }}) so a crafted branch name can't inject shell.
+          HEAD_REF: ${{ github.head_ref }}
+        run: |
+          if [ -n "$(git status --porcelain assets/images/og _posts)" ]; then
+            git config user.name 'Cimos'
+            git config user.email '10230773+Cimos@users.noreply.github.com'
+            git add assets/images/og _posts
+            git commit -m 'Auto-generate OG cards for new posts'
+            # Pushes made with GITHUB_TOKEN do not trigger a new workflow run,
+            # so this cannot loop.
+            git push origin "HEAD:$HEAD_REF"
+          else
+            echo "No OG changes to commit."
+          fi
+
+      - name: Build site
+        run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+
+      - name: Link check (internal)
+        run: |
+          bundle exec htmlproofer ./_site \
+            --disable-external \
+            --allow-hash-href \
+            --ignore-missing-alt \
+            --checks Links,Images,Scripts

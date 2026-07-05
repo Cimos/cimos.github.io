@@ -9,7 +9,7 @@ npm install
 
 | Command | What it does | When to run |
 |---|---|---|
-| `npm run og` | Generate a social-share (OG) card per post from its title, and inject the `image:` front-matter line if missing. | After adding/renaming a blog post. |
+| `npm run og` | Generate a social-share (OG) card for any post **missing** one, and inject the `image:` front-matter line if missing. Existing cards are left untouched (so re-runs are a no-op); pass `-- --force` to regenerate all after a template change. | After adding a blog post — though CI now does this automatically on PRs. |
 | `npm run images` | Recompress everything under `images/` to ≤1600px (mozjpeg / palette PNG), in place. Filenames unchanged. | After adding photos/renders. |
 | `npm run icons` | Regenerate the favicon set, `logo.svg`, and `assets/images/og-default.png` from the chip monogram. | Only if the brand mark changes. |
 

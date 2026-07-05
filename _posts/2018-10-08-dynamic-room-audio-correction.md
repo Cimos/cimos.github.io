@@ -25,7 +25,7 @@ image: /assets/images/og/dynamic-room-audio-correction.png
 
 Year-long final year RMIT Capstone, sponsored by [Fiberdyne Systems](https://fiberdyne.com.au/) and supervised by Dr PJ Radcliffe. We called it **DRAC — Dynamic Room Audio Correction**. Track where the listener is, update the speaker EQ in real time, so wherever they stand they hear the mix the way the mix was made. Submitted October 2018, demoed at EnGenius. Week we submitted I had a full-time offer at Fiberdyne.
 
-It's also where my [phantom power supply post](../mic-phantom-power-supply/) came from — that was built specifically to feed the condenser mic Fiberdyne lent us for the room measurements.
+It's also where my [phantom power supply post](/mic-phantom-power-supply) came from — that was built specifically to feed the condenser mic Fiberdyne lent us for the room measurements.
 
 ## Why bother — the problem with static room EQ
 
@@ -226,6 +226,6 @@ Phased-array beamforming, one corrected field per listener. That one's a thesis.
 
 Started at Fiberdyne as a Junior Embedded Engineer in March 2018, before the Capstone report was even due. Stayed two and a half years. Most of what I'm any good at now I learned at that desk.
 
-They backed three students with thousands of dollars of dev hardware, a bag of SMD parts to solder amps from, a condenser mic, and a year of their engineers' time. Still grateful — and the [phantom power supply](../mic-phantom-power-supply/) is still in the box of "stuff I built that actually worked".
+They backed three students with thousands of dollars of dev hardware, a bag of SMD parts to solder amps from, a condenser mic, and a year of their engineers' time. Still grateful — and the [phantom power supply](/mic-phantom-power-supply) is still in the box of "stuff I built that actually worked".
 
 -SM
