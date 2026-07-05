@@ -27,6 +27,8 @@ camera.position.set(7, 5.5, 8);
 // lighting — neon rim in the Jinx palette
 scene.add(new THREE.AmbientLight(0x3a3358, 0.9));
 const key = new THREE.DirectionalLight(0xffffff, 1.6); key.position.set(5, 9, 6); scene.add(key);
+// fill from below so the underside is readable when the board is orbited over
+const fill = new THREE.DirectionalLight(0xc4ccf5, 1.1); fill.position.set(-3, -8, -4); scene.add(fill);
 const cyan = new THREE.PointLight(0x35d6ea, 60, 40); cyan.position.set(-7, 3, 5); scene.add(cyan);
 const pink = new THREE.PointLight(0xff2e88, 45, 40); pink.position.set(7, 2, -5); scene.add(pink);
 
