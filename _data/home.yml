@@ -15,7 +15,7 @@ project_entries:
     desc: KiCad 8 custom design rules that match JLCPCB and PCBWay manufacturing limits.
 
   - title: Etchy
-    url: etchy
+    url: etchy-pcb-diff
     repo: Cimos/etchy
     highlight: NEW
     flagship: true
