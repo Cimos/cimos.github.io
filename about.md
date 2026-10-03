@@ -93,16 +93,30 @@ Passionate about innovation and continuous professional growth, I thrive on tack
 
 ## Professional Experience
 
-**Electrical & Electronics Engineer - UAS Systems**  
-January 2026 – Present
-- New-product hardware design and production support for a commercial UAV avionics manufacturer
-- Schematic and high-density mixed-signal PCB layout spanning IMU, GNSS, barometer, magnetometer, RF and embedded compute (STM32, FPGA, CM5/RPi)
+**Electronics & Production Engineer**  
+*CubePilot* | January 2026 – Present
+
+CubePilot designs and builds the Cube autopilot family, HereLink and related avionics used across commercial and research UAV platforms. I work across the full path from schematic to shipped unit: new-product hardware design, the in-house production line that builds it, and the tooling that keeps both honest.
+
+*Hardware design*
+- Schematic capture and high-density mixed-signal PCB layout in Altium, spanning IMU, GNSS, barometer, magnetometer, RF and embedded compute (STM32, FPGA, CM5/RPi)
 - Multi-rail power architectures with redundancy and isolation for flight-critical hardware
 - Bring-up, DVT and hardware debugging across CAN, CAN FD, USB, Ethernet, SPI, I2C and UART
-- DFM/DFT feedback into the in-house SMT line and supporting transition to low-volume production
+- Design reviews of new boards before release: pinouts, power rails, feedback networks, differential pairs and BOM checked against datasheets
+
+*Production*
+- DFM/DFT feedback into the in-house SMT line, and supporting new products through to low-volume production
 - Site bring-up of a new Australian production facility — coordinating trades, building works and external suppliers across SMT equipment, dispensing, fire compliance and on-site upgrades
 - Site-wide ESD program rollout — supplier evaluation, garment trials, controlled-area setup
+- Line automation support, including documenting the PLC and EtherCAT control system on a production line so the floor team can connect to and maintain it
 - Trade-show production builds and on-site demos
+
+*Engineering tooling*
+- Built the hardware team's PCB review and CI tooling: review packs generated straight from Altium projects, automated cross-checks of netlist, geometry and BOM, with findings filed as tracked issues
+- Fab-output diffing between board revisions, so every change to copper, drill and placement is measured before it goes to the fab ([etchy](/etchy-pcb-diff))
+- Automated health checks on the shared Altium footprint and symbol libraries against the company's library conventions
+
+*Team*
 - Mentoring new graduate engineers on hardware and production processes
 
 **Electrical & Electronics Engineer**  
