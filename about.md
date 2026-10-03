@@ -93,13 +93,14 @@ Passionate about innovation and continuous professional growth, I thrive on tack
 
 ## Professional Experience
 
-**Electrical & Electronics Engineer - UAS Systems**  
-January 2026 – Present
-- New-product hardware design and production support for a commercial UAV avionics manufacturer
+**Electronics & Production Engineer**  
+*CubePilot* | January 2026 – Present
+- New-product hardware design and production support for CubePilot's commercial UAV autopilots and avionics
 - Schematic and high-density mixed-signal PCB layout spanning IMU, GNSS, barometer, magnetometer, RF and embedded compute (STM32, FPGA, CM5/RPi)
 - Multi-rail power architectures with redundancy and isolation for flight-critical hardware
 - Bring-up, DVT and hardware debugging across CAN, CAN FD, USB, Ethernet, SPI, I2C and UART
 - DFM/DFT feedback into the in-house SMT line and supporting transition to low-volume production
+- Built PCB design-review and CI tooling for the hardware team, including automated fab-output diffing between board revisions ([etchy](/etchy-pcb-diff))
 - Site bring-up of a new Australian production facility — coordinating trades, building works and external suppliers across SMT equipment, dispensing, fire compliance and on-site upgrades
 - Site-wide ESD program rollout — supplier evaluation, garment trials, controlled-area setup
 - Trade-show production builds and on-site demos
