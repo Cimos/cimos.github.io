@@ -7,6 +7,8 @@ tags: [kicad, kicad-dru, design-rules, drc, jlcpcb, pcbway, pcb, eda]
 image: /assets/images/og/kicad-custom-design-rules.png
 ---
 
+> **Superseded:** these rules have been rebuilt as [kicad-druid](/kicad-druid-design-rules), with generated rule files, a Generic set for either fab, and full KiCad DRC in CI. Use that one for new projects.
+
 ## Table of contents
 - [Overview](#overview)
 - [The check KiCad doesn't do](#the-check-kicad-doesnt-do)

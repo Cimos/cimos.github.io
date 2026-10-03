@@ -9,10 +9,11 @@ navbar_entries:
     url: tags
 
 project_entries:
-  - title: KiCad Custom Design Rules
-    url: kicad-custom-design-rules
-    repo: Cimos/KiCad-CustomDesignRules
-    desc: KiCad 8 custom design rules that match JLCPCB and PCBWay manufacturing limits.
+  - title: kicad-druid
+    url: kicad-druid-design-rules
+    repo: Cimos/kicad-druid
+    highlight: NEW
+    desc: KiCad design rules generated from JLCPCB and PCBWay capabilities, plus a Generic set for either fab. Every variant checked by KiCad DRC in CI.
 
   - title: Etchy
     url: etchy-pcb-diff
@@ -45,6 +46,12 @@ project_entries:
     repo: Cimos/vscode-kicad-dru
     desc: Syntax highlighting and snippets for KiCad's `.kicad_dru` custom design rule files.
 
+  - title: eV+ for VS Code
+    url: vscode-evplus-extension
+    repo: Cimos/vscode-evplus
+    highlight: NEW
+    desc: Language support for Omron Adept eV+ / V+ robot programs in VS Code. Highlighting, hover help, completion, diagnostics and navigation.
+
   - title: kibot-config
     url: kibot-config
     repo: Cimos/kibot-config
@@ -66,6 +73,11 @@ project_entries:
 
 
 old_project_entries:
+  - title: KiCad Custom Design Rules
+    url: kicad-custom-design-rules
+    repo: Cimos/KiCad-CustomDesignRules
+    desc: The original hand-written JLCPCB and PCBWay design rules for KiCad 8. Superseded by kicad-druid.
+
   - title: Dynamic Room Audio Correction (DRAC)
     url: dynamic-room-audio-correction
     desc: My 2018 final-year capstone — a real-time Kirkeby room-correction system on the ADSP-SC589 SHARC, with a Qt control app.
