@@ -34,6 +34,7 @@ layout: default
       <pre class="fs-log">{% for line in flagship.log %}{% assign c = line | slice: 0 %}<span class="ln {% case c %}{% when '$' %}cmd{% when '✓' %}ok{% when 'Δ' %}chg{% when '✗' %}err{% endcase %}">{{ line }}</span>{% endfor %}</pre>
       <p class="fs-desc">{{ flagship.desc }}</p>
       {% if flagship.note %}<p class="fs-note">{{ flagship.note }}</p>{% endif %}
+      {% if flagship.url %}<p class="fs-note"><a href="{{ flagship.url | relative_url }}">→ Read the write-up</a></p>{% endif %}
     </div>
   </aside>
   {% endif %}

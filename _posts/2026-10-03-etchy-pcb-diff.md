@@ -4,7 +4,7 @@ author: Simon Maddison
 title:  "etchy: A PCB Diff You Can Trust"
 date:   2026-10-03
 tags: [pcb, gerber, rust, diff, ci-cd, fabrication]
-image: /assets/images/og/etchy.png
+image: /assets/images/og/etchy-pcb-diff.png
 ---
 
 ## Table of contents
