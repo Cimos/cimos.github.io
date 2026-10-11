@@ -141,5 +141,5 @@ jobs:
             --disable-external \
             --allow-hash-href \
             --ignore-missing-alt \
-            --swap-urls '^https://cimos.github.io:' \
+            --swap-urls '^https\://cimos.github.io:' \
             --checks Links,Images,Scripts
