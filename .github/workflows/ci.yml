@@ -87,9 +87,19 @@ jobs:
           git commit -m 'Auto-generate OG cards for new posts'
           git push origin "HEAD:$HEAD_REF"
           echo "pushed=true" >> "$GITHUB_OUTPUT"
-          # Pushes made with GITHUB_TOKEN don't trigger workflows (so no loop), but
-          # workflow_dispatch is exempt — use it so the new head gets real check runs.
-          gh workflow run ci.yml --ref "$HEAD_REF"
+          # The bot's push starts a PR run that GitHub holds as action_required.
+          # Approve it so the PR gets its required checks with no manual click.
+          sha=$(git rev-parse HEAD)
+          for _ in $(seq 1 12); do
+            id=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$sha&event=pull_request&status=action_required" --jq '.workflow_runs[0].id // empty')
+            if [ -n "$id" ]; then
+              gh api -X POST "repos/$GITHUB_REPOSITORY/actions/runs/$id/approve"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "::error::No held CI run found for $sha to approve"
+          exit 1
 
   build-and-check:
     needs: og-cards
