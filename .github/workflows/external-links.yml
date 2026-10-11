@@ -1,0 +1,34 @@
+name: External link check
+
+# Weekly (non-blocking for PRs) check for dead external links.
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  external-links:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - run: bundle exec jekyll build
+        env:
+          JEKYLL_ENV: production
+      - name: Check external links
+        run: |
+          bundle exec htmlproofer ./_site \
+            --only-4xx \
+            --allow-hash-href \
+            --ignore-missing-alt \
+            --checks Links \
+            --typhoeus '{"timeout":30,"followlocation":true}' \
+            --ignore-status-codes 429,999
