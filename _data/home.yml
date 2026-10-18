@@ -31,6 +31,11 @@ project_entries:
       - "✗ gate    FAIL — clearance"
     note: Open source · CLI, desktop viewer, tiny container · v0.1 out now
 
+  - title: Kinetic Sand Table
+    url: kinetic-sand-table
+    highlight: WIP
+    desc: Rebuilding the Dune Weaver Pro sand table in parametric FreeCAD and fitting it into an IKEA VITTSJÖ coffee table. Build log with updates.
+
   - title: Mad_RP2040
     url: madrp2040-anything-keypad
     repo: Cimos/Mad_RP2040
