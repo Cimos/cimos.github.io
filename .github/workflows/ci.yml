@@ -84,6 +84,9 @@ jobs:
             [ -e "$f" ] || continue
             slug=$(basename "$f"); slug=${slug#????-??-??-}; slug=${slug%.*}
             test -s "_site/assets/images/og/$slug.png" || { echo "::error file=$f::Missing OG card for $slug"; exit 1; }
+            if [ -s "_site/$slug.html" ] && ! grep -q "og/$slug.png" "_site/$slug.html"; then
+              echo "::error file=$f::$slug.html does not reference its OG card"; exit 1
+            fi
           done
 
       - name: Verify no dev-only code in production
