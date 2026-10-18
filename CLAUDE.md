@@ -8,9 +8,12 @@ cyberpunk neon identity.
 
 ## Stack
 
-- **Jekyll 4** static site, deployed on **GitHub Pages** (default branch build from `master`).
+- **Jekyll 4** static site on **GitHub Pages**, built and deployed by
+  **GitHub Actions** (`.github/workflows/ci.yml`; Pages source = "GitHub Actions").
+  The `Gemfile` is what production uses — the artifact CI checks is the one deployed.
 - **No theme.** Moonwalk has been fully removed — all layouts/includes/sass are local; the main stylesheet is `_sass/foundry.scss`.
-- Plugins: `jekyll-feed`, `jekyll-seo-tag`, `jekyll-sitemap`.
+- Plugins: `jekyll-feed`, `jekyll-seo-tag`, `jekyll-sitemap`, plus the local
+  `_plugins/og_image.rb` (points each post's `image` at its generated OG card).
 - Fonts are **self-hosted** (Inter variable + Roboto Mono, latin subset) in `assets/fonts/` — no Google Fonts request.
 
 ## Local development
@@ -33,7 +36,7 @@ widget** (bottom-left, adapted from etchy's demo widget). `scripts/dev-server.py
 serves `_site/` and collects `POST /feedback` into `.feedback/feedback.jsonl`
 (gitignored — contains IP/UA/names). Production builds never include the widget.
 
-The Node scripts in `scripts/` are **build-time tooling, not part of the Jekyll build** — run them by hand when needed (see below). They need `npm install` first.
+The Node scripts in `scripts/` are **asset tooling, not part of the Jekyll build** — CI runs `npm run og` before every build; the rest are run by hand (see below). They need `npm install` first.
 
 ---
 
@@ -46,9 +49,10 @@ _layouts/              default · home · post · blog
 _includes/             head, terminal, pcb_viewer, site_scripts, analytics,
                        card_list, date_and_social_share, post_list, …
 _sass/                 foundry.scss (main styles) · list.scss (cards) · syntax.scss
+_plugins/              og_image.rb (default post `image` → generated OG card)
 _posts/                blog posts (Markdown)
 assets/fonts/          self-hosted woff2
-assets/images/og/      per-post social cards (generated — see scripts/)
+assets/images/og/      per-post social cards (generated in CI, gitignored)
 assets/js/vendor/      vendored three.js + OrbitControls + GLTFLoader
 scripts/               asset tooling (OG cards, image compression, icons)
 about.md tags.md blog.html 404.html
@@ -68,12 +72,12 @@ author: Simon Maddison
 title:  "Post Title"
 date:   2026-07-01
 tags: [tag-a, tag-b]
-image: /assets/images/og/slug.png   # ← run `npm run og` to generate this
 ---
 ```
 
-Then **`npm run og`** to generate the social card and inject the `image:` line
-if missing. The tags page (`/tags`) and RSS pick it up automatically.
+That's it — CI generates the social card on every build and the post's
+`image` defaults to it (set `image:` only to override with a custom picture).
+The tags page (`/tags`) and RSS pick it up automatically.
 
 ### A portfolio project card
 Edit `_data/home.yml` under `project_entries` (or `old_project_entries` for
@@ -95,7 +99,7 @@ The **terminal** and any data-driven UI read these automatically — no second p
 
 ## Design system
 
-Palette lives as CSS custom properties in `_sass/moonwalk.scss`
+Palette lives as CSS custom properties in `_sass/foundry.scss`
 (`@mixin dark-appearance` / `light-appearance`). Theme is `auto` by default
 (follows OS), toggle stamps `data-theme` on `<html>`.
 
@@ -115,7 +119,7 @@ Fonts: **Inter** (headings + body), **Roboto Mono** (labels, eyebrows, dates, co
 
 ## Custom features (and where they live)
 
-- **Bootable terminal** — `_includes/terminal.html` + `.term-*` in `moonwalk.scss`.
+- **Bootable terminal** — `_includes/terminal.html` + `.term-*` in `foundry.scss`.
   Backtick or the bottom-right chip opens it. Command data (projects, posts,
   socials) is **generated from Jekyll**, so it stays in sync. `open`/`theme`
   do real navigation / theme switching.
@@ -125,8 +129,9 @@ Fonts: **Inter** (headings + body), **Roboto Mono** (labels, eyebrows, dates, co
   Loads only on pages that set the flag.
 - **Live ★ counts** — client-side GitHub API fetch (`site_scripts.html`),
   6h cache, pill shown at ≥2 stars.
-- **Per-post OG cards** — generated PNGs in `assets/images/og/`; each post's
-  `image:` front matter points at its card.
+- **Per-post OG cards** — PNGs generated into `assets/images/og/` by CI
+  (`npm run og`, gitignored); `_plugins/og_image.rb` makes each post's `image`
+  default to its card.
 - **Reading UX** — copy-code buttons, hover heading anchors, image lightbox,
   lazy-loaded images (all `site_scripts.html`, article pages only).
 - **Animated hero** — faint PCB-trace canvas behind the homepage hero
@@ -140,9 +145,9 @@ Fonts: **Inter** (headings + body), **Roboto Mono** (labels, eyebrows, dates, co
 
 ## Asset tooling (`scripts/`)
 
-Not run by Jekyll — run manually after `npm install`:
+Not run by Jekyll — run after `npm install`:
 
-- **`npm run og`** — generate a social card per post + inject `image:` front matter. **Run this whenever you add a post.**
+- **`npm run og`** — generate any missing social cards. CI runs it before every build; run it locally only to preview cards.
 - **`npm run images`** — recompress everything under `images/` to ≤1600px (mozjpeg / palette PNG). Run after adding photos.
 - **`npm run icons`** — regenerate the favicon set, `logo.svg`, and the default OG image from the chip monogram.
 
@@ -150,8 +155,9 @@ Not run by Jekyll — run manually after `npm install`:
 
 ## Gotchas / maintenance
 
-- ⚠️ **OG cards are not automatic.** New posts need `npm run og` (there is no
-  build-time hook yet — see *CI + auto-OG* below).
+- **Deploys only happen through CI.** A push to `master` deploys after `lint`
+  and `build-and-check` pass; a red build means nothing ships. Re-run via
+  *Actions → CI → Run workflow* if a deploy fails transiently.
 - `site.url` has **no trailing slash** (keeps absolute URLs from doubling up).
 - Images are large photos — keep them run through `npm run images`.
 
@@ -164,10 +170,8 @@ Not run by Jekyll — run manually after `npm install`:
    the `flagship: true` entry in `_data/home.yml`), project card grid, styled blog
    rows, real footer. Reading pages keep a ~47rem prose measure; the homepage uses
    `shell: wide` front matter for the 74rem shell.
-2. **CI + auto-OG — queued.** A GitHub Actions workflow to build, link-check
-   (html-proofer), and auto-generate OG cards so new posts never miss one.
-3. **Etchy** — teased on the portfolio with a SOON badge; flip to a real card +
-   write-up when the repo goes public.
-4. **Real Mad_RP2040 3D model** — currently a procedural placeholder. Export a
-   GLB (`kicad-cli pcb export glb Mad_RP2040.kicad_pcb -o madrp2040.glb`), drop
-   in `assets/models/`, set the post's `pcb3d:` to that path.
+2. **CI + Actions deploy — DONE.** One workflow builds, generates OG cards,
+   link-checks (html-proofer), and deploys the checked artifact to Pages.
+3. **Etchy — DONE.** Published write-up + flagship card.
+4. **Real Mad_RP2040 3D model — DONE.** `assets/models/mad-rp2040.glb` (~15 MB,
+   already quantized; further shrinking would need meshopt/Draco decoders vendored).
