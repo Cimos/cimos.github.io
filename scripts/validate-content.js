@@ -21,10 +21,9 @@ for (const file of fs.readdirSync(postsDir).filter((f) => /\.(md|markdown)$/.tes
   for (const key of ['layout']) {
     if (!new RegExp(`^${key}:`, 'm').test(fm)) errors.push(`${rel}: missing "${key}" in front matter`);
   }
+  // `image:` is optional (the generated OG card is the default); a custom one must exist.
   const img = fm.match(/^image:\s*["']?([^"'\r\n]+?)["']?\s*$/m);
-  if (!img) {
-    errors.push(`${rel}: missing "image:" (run npm run og)`);
-  } else if (img[1].startsWith('/') && !fs.existsSync(path.join(root, img[1]))) {
+  if (img && img[1].startsWith('/') && !fs.existsSync(path.join(root, img[1]))) {
     errors.push(`${rel}: image not found: ${img[1]}`);
   }
 }

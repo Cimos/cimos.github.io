@@ -1,9 +1,11 @@
 name: CI
 
-# Gates merges to master. Pages' own build still owns deployment — this workflow does not deploy.
+# Builds, checks, and deploys the site. The site that passes the checks is the
+# exact artifact GitHub Pages serves (Pages source: "GitHub Actions").
 #   lint            workflow lint, script syntax, post/front-matter/image validation
-#   og-cards        (same-repo PRs only) generates missing OG cards and commits them back
-#   build-and-check strict production build, output + leak checks, internal link check
+#   build-and-check OG cards, strict production build, output + leak checks,
+#                   internal link check; uploads the Pages artifact on master
+#   deploy          (master only) publishes the artifact to GitHub Pages
 # Require `lint` and `build-and-check` in branch protection.
 
 on:
@@ -42,69 +44,7 @@ jobs:
       - name: Validate content
         run: node scripts/validate-content.js
 
-  og-cards:
-    # Only same-repo, human-authored PRs: forks and Dependabot get a read-only token.
-    if: >-
-      github.event_name == 'pull_request' &&
-      github.event.pull_request.head.repo.full_name == github.repository &&
-      github.actor != 'dependabot[bot]'
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write   # push generated cards to the PR branch
-      actions: write    # re-dispatch CI so checks attach to the new head commit
-    outputs:
-      pushed: ${{ steps.commit.outputs.pushed }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: npm
-
-      - run: npm ci
-
-      - run: npm run og
-
-      - name: Commit generated cards back
-        id: commit
-        env:
-          # Via env (not inline ${{ }}) so a crafted branch name can't inject shell.
-          HEAD_REF: ${{ github.head_ref }}
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          echo "pushed=false" >> "$GITHUB_OUTPUT"
-          if [ -z "$(git status --porcelain assets/images/og _posts)" ]; then
-            echo "No OG changes to commit."
-            exit 0
-          fi
-          git config user.name 'Cimos'
-          git config user.email '10230773+Cimos@users.noreply.github.com'
-          git add assets/images/og _posts
-          git commit -m 'Auto-generate OG cards for new posts'
-          git push origin "HEAD:$HEAD_REF"
-          echo "pushed=true" >> "$GITHUB_OUTPUT"
-          # The bot's push starts a PR run that GitHub holds as action_required.
-          # Approve it so the PR gets its required checks with no manual click.
-          sha=$(git rev-parse HEAD)
-          for _ in $(seq 1 12); do
-            id=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$sha&event=pull_request&status=action_required" --jq '.workflow_runs[0].id // empty')
-            if [ -n "$id" ]; then
-              gh api -X POST "repos/$GITHUB_REPOSITORY/actions/runs/$id/approve"
-              exit 0
-            fi
-            sleep 5
-          done
-          echo "::error::No held CI run found for $sha to approve"
-          exit 1
-
   build-and-check:
-    needs: og-cards
-    # Skipped only when og-cards pushed a new head; the dispatched run covers that commit.
-    if: ${{ !cancelled() && needs.og-cards.outputs.pushed != 'true' }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -121,8 +61,10 @@ jobs:
           node-version: '20'
           cache: npm
 
-      - name: Validate content
-        run: node scripts/validate-content.js
+      - run: npm ci
+
+      - name: Generate OG cards
+        run: npm run og
 
       - name: Build site (production, strict)
         run: bundle exec jekyll build --strict_front_matter --trace
@@ -135,6 +77,14 @@ jobs:
             test -s "_site/$f" || { echo "::error::Missing build output: $f"; exit 1; }
           done
           test -s _site/tags.html || test -s _site/tags/index.html || { echo "::error::Missing tags page"; exit 1; }
+
+      - name: Verify every post's OG card is published
+        run: |
+          for f in _posts/*.md _posts/*.markdown; do
+            [ -e "$f" ] || continue
+            slug=$(basename "$f"); slug=${slug#????-??-??-}; slug=${slug%.*}
+            test -s "_site/assets/images/og/$slug.png" || { echo "::error file=$f::Missing OG card for $slug"; exit 1; }
+          done
 
       - name: Verify no dev-only code in production
         run: |
@@ -153,3 +103,25 @@ jobs:
             --ignore-missing-alt \
             --swap-urls '^https\://cimos.github.io:' \
             --checks Links,Images,Scripts
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+        uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: [lint, build-and-check]
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

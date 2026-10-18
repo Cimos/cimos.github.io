@@ -1,5 +1,9 @@
 # CI + auto-OG — design (issue #11)
 
+> **Superseded (2026-10-18):** the site now deploys via GitHub Actions and OG cards
+> are generated during every build (gitignored, defaulted by `_plugins/og_image.rb`).
+> The commit-back/auto-approve flow described below was removed. Kept for history.
+
 ## Goal
 On every pull request, automatically make sure each blog post has its social (OG)
 card and that the site has no broken internal links — without changing how the

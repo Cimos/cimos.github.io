@@ -4,7 +4,6 @@ author: Simon Maddison
 title:  "kicad-druid: Fab House Design Rules, Generated and Tested"
 date:   2026-10-03
 tags: [kicad, kicad-dru, design-rules, drc, jlcpcb, pcbway, ci-cd, pcb]
-image: /assets/images/og/kicad-druid-design-rules.png
 ---
 
 ## Table of contents
