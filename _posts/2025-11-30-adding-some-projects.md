@@ -4,7 +4,6 @@ author: Simon Maddison
 title:  "Adding More Content"
 date:   2025-11-30
 tags: [projects, meta]
-image: /assets/images/og/adding-some-projects.png
 ---
 
 # Adding More Content

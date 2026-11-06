@@ -1,77 +1,130 @@
 name: CI
 
-# Build + link-check on every PR and master push. Auto-generates missing OG
-# social cards and, on PRs, commits them back so nothing ships without one.
-# GitHub's automatic Pages build still owns deployment — this workflow does not deploy.
+# Builds, checks, and deploys the site. The site that passes the checks is the
+# exact artifact GitHub Pages serves (Pages source: "GitHub Actions").
+#   lint            workflow lint, script syntax, post/front-matter/image validation
+#   build-and-check OG cards, strict production build, output + leak checks,
+#                   internal link check; uploads the Pages artifact on master
+#   deploy          (master only) publishes the artifact to GitHub Pages
+# Require `lint` and `build-and-check` in branch protection.
 
 on:
   pull_request:
     branches: [master]
   push:
     branches: [master]
+  workflow_dispatch:
 
 permissions:
-  contents: write   # for the OG commit-back on PRs
+  contents: read
 
 concurrency:
-  group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Lint workflows
+        run: |
+          bash <(curl -sSfL https://raw.githubusercontent.com/rhysd/actionlint/v1.7.7/scripts/download-actionlint.bash) 1.7.7
+          ./actionlint -color
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '20'
+
+      - name: Check scripts parse
+        run: for f in scripts/*.js; do node --check "$f"; done
+
+      - name: Validate content
+        run: node scripts/validate-content.js
+
   build-and-check:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          # On a PR, check out the head branch (not the detached merge ref) so the
-          # OG commit-back can push. Empty on push events → default checkout.
-          ref: ${{ github.head_ref }}
+      # Default checkout: on PRs this is the merge result, i.e. what will actually land.
+      - uses: actions/checkout@v7
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'
           bundler-cache: true
 
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '20'
+          cache: npm
 
-      - name: Install OG tooling
-        run: npm install
+      - run: npm ci
 
       - name: Generate OG cards
         run: npm run og
 
-      - name: Commit generated cards back (PR only)
-        if: github.event_name == 'pull_request'
-        env:
-          # Pass via env (not inline ${{ }}) so a crafted branch name can't inject shell.
-          HEAD_REF: ${{ github.head_ref }}
-        run: |
-          if [ -n "$(git status --porcelain assets/images/og _posts)" ]; then
-            git config user.name 'Cimos'
-            git config user.email '10230773+Cimos@users.noreply.github.com'
-            git add assets/images/og _posts
-            git commit -m 'Auto-generate OG cards for new posts'
-            # Pushes made with GITHUB_TOKEN do not trigger a new workflow run,
-            # so this cannot loop.
-            git push origin "HEAD:$HEAD_REF"
-          else
-            echo "No OG changes to commit."
-          fi
-
-      - name: Build site
-        run: bundle exec jekyll build
+      - name: Build site (production, strict)
+        run: bundle exec jekyll build --strict_front_matter --trace
         env:
           JEKYLL_ENV: production
 
+      - name: Verify key outputs exist
+        run: |
+          for f in index.html 404.html feed.xml sitemap.xml; do
+            test -s "_site/$f" || { echo "::error::Missing build output: $f"; exit 1; }
+          done
+          test -s _site/tags.html || test -s _site/tags/index.html || { echo "::error::Missing tags page"; exit 1; }
+
+      - name: Verify every post's OG card is published
+        run: |
+          for f in _posts/*.md _posts/*.markdown; do
+            [ -e "$f" ] || continue
+            slug=$(basename "$f"); slug=${slug#????-??-??-}; slug=${slug%.*}
+            test -s "_site/assets/images/og/$slug.png" || { echo "::error file=$f::Missing OG card for $slug"; exit 1; }
+            if [ -s "_site/$slug.html" ] && ! grep -q "og/$slug.png" "_site/$slug.html"; then
+              echo "::error file=$f::$slug.html does not reference its OG card"; exit 1
+            fi
+          done
+
+      - name: Verify no dev-only code in production
+        run: |
+          if grep -rIl --include='*.html' -e 'etfb-fab' -e '/feedback' _site; then
+            echo "::error::Dev feedback widget leaked into the production build"
+            exit 1
+          fi
+          test ! -e _site/.feedback || { echo "::error::.feedback in _site"; exit 1; }
+
       - name: Link check (internal)
+        # --swap-urls maps absolute site URLs to local files so they are verified too.
         run: |
           bundle exec htmlproofer ./_site \
             --disable-external \
             --allow-hash-href \
             --ignore-missing-alt \
+            --swap-urls '^https\://cimos.github.io:' \
             --checks Links,Images,Scripts
+
+      - name: Upload Pages artifact
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+        uses: actions/upload-pages-artifact@v5
+
+  deploy:
+    needs: [lint, build-and-check]
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

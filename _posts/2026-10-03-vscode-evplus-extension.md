@@ -4,7 +4,6 @@ author: Simon Maddison
 title:  "eV+ in VS Code: Language Support for Omron Robot Programs"
 date:   2026-10-03
 tags: [vscode, omron, robotics, automation, ev-plus, extension]
-image: /assets/images/og/vscode-evplus-extension.png
 ---
 
 ## Table of contents

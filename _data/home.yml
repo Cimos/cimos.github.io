@@ -31,6 +31,11 @@ project_entries:
       - "✗ gate    FAIL — clearance"
     note: Open source · CLI, desktop viewer, tiny container · v0.1 out now
 
+  - title: Kinetic Sand Table
+    url: kinetic-sand-table
+    highlight: WIP
+    desc: Rebuilding the Dune Weaver Pro sand table in parametric FreeCAD and fitting it into an IKEA VITTSJÖ coffee table. Build log with updates.
+
   - title: Mad_RP2040
     url: madrp2040-anything-keypad
     repo: Cimos/Mad_RP2040
@@ -95,38 +100,3 @@ footer_entries:
 
   - title: LinkedIn
     url: https://www.linkedin.com/in/maddison-eee/
-
-
-# misc_entries:
-#   - title: this is an example vertical list
-#     url: false
-
-#   - title: you can show or hide using a boolean flag in _config.yml
-#     url: false
-
-#   - title: and you can add data in _data/home.yml
-#     url: false
-
-#   - title: Blog posts
-#     post_list: true
-#     url: false
-
-#   - title: moonwalk on the Internet
-#     url: false
-#     entries:
-#       - title: on Github
-#         url: https://github.com/abhinavs/moonwalk
-
-#       - title: originally built for abhinav's homepage
-#         url: https://www.abhinav.co
-
-#       - title: this list is scalable and can be nested
-#         url: false
-#         entries:
-#           - title: this is nested inside a nested list
-#             url: false
-
-#           - title: it is easy to use, see _data/home.yml to see how to configure it.
-#             url: false
-
-

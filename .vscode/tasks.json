@@ -2,7 +2,7 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Serve Moonwalk locally (live reload)",
+      "label": "Serve site locally (live reload)",
       "type": "shell",
       "command": "bundle exec jekyll serve --livereload --host 0.0.0.0 --port 4000",
       "group": {
@@ -12,7 +12,6 @@
       "problemMatcher": [],
       "presentation": {
         "echo": true,
-        ,
         "reveal": "always",
         "focus": false,
         "panel": "dedicated",
@@ -22,7 +21,7 @@
       "runOptions": {
         "runOn": "folderOpen"
       },
-      "detail": "Starts Jekyll with live reload — click the popup to open in browser"
+      "detail": "Starts Jekyll with live reload - click the popup to open in browser"
     }
   ]
 }
