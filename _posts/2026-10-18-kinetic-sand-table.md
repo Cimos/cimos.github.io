@@ -4,7 +4,6 @@ author: Simon Maddison
 title:  "Building a Kinetic Sand Table"
 date:   2026-10-18
 tags: [sand-table, freecad, cad, 3d-printing, build-log]
-image: /assets/images/og/kinetic-sand-table.png
 ---
 
 ## Table of contents

@@ -2,7 +2,6 @@
 layout: post
 author: Simon Maddison
 tags: [the-beginning, moonwalk]
-image: /assets/images/og/starting-a-webpage.png
 ---
 
 # A quick entry

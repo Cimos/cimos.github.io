@@ -4,7 +4,6 @@ author: Simon Maddison
 title:  "Building My First Split Keyboard: The Corne (CRKBD)"
 date:   2025-11-30
 tags: [rp2040, nice_nano, crkbd, mechanical-keyboard, kicad, pcb, qmk, zmk]
-image: /assets/images/og/mechanical-keyboard-rabbit-hole.png
 ---
 
 ## Table of contents
@@ -28,7 +27,7 @@ I sourced separately:
 - 2 × nice!nano v2 (wireless) or Pro Micro / RP2040-Zero (wired)
 - 42 × MX switches (tried heaps — current ones are gloriously clicky, model long forgotten)
 - 1 × USB-C cable
-- Keycaps — [Ducky PBT Dye-Sub 132-Key MDA Profile “Dino” set](https://www.pccasegear.com/products/63876/ducky-pbt-dye-sub-132-key-mda-profile-keycap-set-dino?srsltid=AfmBOoqxFFDb0a0zFdfe2--LPF1FsPERWolrTHqRl5I4O2yMnGAu022C)
+- Keycaps — [Ducky PBT Dye-Sub 132-Key MDA Profile “Dino” set](https://www.pccasegear.com/products/63876/ducky-pbt-dye-sub-132-key-mda-profile-keycap-set-dino)
 
 Assembly is dead easy if you follow the official v3 Corne Cherry [build guide](https://github.com/foostan/crkbd/blob/main/docs/corne-cherry/v3/buildguide_en.md).
 

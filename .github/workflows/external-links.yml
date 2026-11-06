@@ -1,6 +1,7 @@
 name: External link check
 
 # Weekly (non-blocking for PRs) check for dead external links.
+# 403/429/999 are ignored: shops and CDNs routinely block CI bots with them.
 
 on:
   schedule:
@@ -31,4 +32,4 @@ jobs:
             --ignore-missing-alt \
             --checks Links \
             --typhoeus '{"timeout":30,"followlocation":true}' \
-            --ignore-status-codes 429,999
+            --ignore-status-codes 403,429,999

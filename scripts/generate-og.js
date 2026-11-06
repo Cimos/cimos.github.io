@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Generate a branded social-share (OG) card per blog post from its title,
-// and inject `image:` into the post front matter if missing. Idempotent.
+// Generate a branded social-share (OG) card per blog post from its title.
+// Output (assets/images/og/<slug>.png) is gitignored: CI runs this before
+// every build, and _plugins/og_image.rb points each post's `image` at it.
 //   npm install && npm run og
 const sharp = require('sharp');
 const fs = require('fs');
@@ -46,34 +47,25 @@ function ogSvg(title) {
 </svg>`;
 }
 
-// By default only generate cards that are MISSING, so re-runs are a no-op and
-// CI never churns existing cards (sharp/font differences across machines would
-// otherwise re-encode every PNG). Pass --force to regenerate all (e.g. after a
-// template change).
+// Only cards that are MISSING are generated, so local re-runs are a no-op.
+// Pass --force to regenerate all (e.g. after a template change).
 (async () => {
   const force = process.argv.includes('--force');
-  const files = fs.readdirSync(POSTS).filter((f) => f.endsWith('.md'));
-  let generated = 0, injected = 0;
+  const files = fs.readdirSync(POSTS).filter((f) => /\.(md|markdown)$/.test(f));
+  let generated = 0;
   for (const f of files) {
-    const full = path.join(POSTS, f);
-    let src = fs.readFileSync(full, 'utf8');
-    const fm = src.match(/^---\n([\s\S]*?)\n---/);
+    const src = fs.readFileSync(path.join(POSTS, f), 'utf8').replace(/^\uFEFF/, '');
+    const fm = src.match(/^---\r?\n([\s\S]*?)\r?\n---/);
     if (!fm) { console.log('skip (no front matter):', f); continue; }
     const titleM = fm[1].match(/^title:\s*"?(.+?)"?\s*$/m);
     const title = titleM ? titleM[1] : f;
-    const slug = f.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.md$/, '');
+    const slug = f.replace(/^\d{4}-\d{2}-\d{2}-/, '').replace(/\.(md|markdown)$/, '');
     const cardPath = path.join(OGDIR, `${slug}.png`);
     if (force || !fs.existsSync(cardPath)) {
       await sharp(Buffer.from(ogSvg(title))).png().toFile(cardPath);
       generated++;
       console.log('og:', slug, force ? '(regenerated)' : '(new)');
     }
-    if (!/^image:\s*/m.test(fm[1])) {
-      src = src.replace(/^(---\n[\s\S]*?\n)(---)/, (m, body, end) => body + `image: /assets/images/og/${slug}.png\n` + end);
-      fs.writeFileSync(full, src);
-      injected++;
-      console.log('inject image:', slug);
-    }
   }
-  console.log(`done — ${files.length} posts, ${generated} card(s) generated, ${injected} front-matter line(s) injected`);
+  console.log(`done — ${files.length} posts, ${generated} card(s) generated`);
 })().catch((e) => { console.error(e); process.exit(1); });
