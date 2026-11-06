@@ -4,7 +4,6 @@ author: Simon Maddison
 title:  "Designing Hardware with AI When You Don't Have the Time"
 date:   2026-10-18
 tags: [ai, cad, freecad, workflow, sand-table]
-image: /assets/images/og/designing-with-ai.png
 ---
 
 ## Table of contents
