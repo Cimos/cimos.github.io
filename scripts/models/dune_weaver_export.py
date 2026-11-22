@@ -20,7 +20,7 @@ parts = []
 
 def add(name, role, shape, color):
     bb = shape.BoundBox
-    tol = max(0.25, min(2.0, bb.DiagonalLength * 0.003))
+    tol = max(0.4, min(3.0, bb.DiagonalLength * 0.005))
     pts, tris = shape.tessellate(tol)
     parts.append(dict(name=name, role=role, color=color,
                       v=[[round(p.x, 2), round(p.y, 2), round(p.z, 2)] for p in pts],
