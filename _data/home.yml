@@ -36,6 +36,29 @@ project_entries:
     highlight: WIP
     desc: Rebuilding the Dune Weaver Pro sand table in parametric FreeCAD and fitting it into an IKEA VITTSJÖ coffee table. Build log with updates.
 
+  - title: Cube SD Reader
+    url: cube-sd-reader
+    repo: Cimos/cube-sd-reader
+    highlight: NEW
+    desc: Firmware that turns a CubeOrange+ into a USB SD card reader through the normal ArduPilot bootloader. Flash ArduPilot back when you're done.
+
+  - title: FCTEL
+    url: fctel-edgetx-telemetry
+    repo: Cimos/fc-telem
+    highlight: NEW
+    desc: EdgeTX telemetry screen for 128x64 radios. Works out whether it's talking to INAV, Betaflight or ArduPilot over CRSF/ELRS.
+
+  - title: CAD from the Command Line
+    url: cad-from-the-command-line
+    highlight: NEW
+    desc: The CadQuery and FreeCAD setup on WSL2 behind the case and sand table. Locked versions, checks on every build.
+
+  - title: CrumbCatcherLight
+    url: crumbcatcherlight
+    repo: Cimos/CrumbCatcherLight
+    highlight: WIP
+    desc: Wireless keyboard board on the nRF52840 with LiPo and Qi charging and per-key RGB. Early days.
+
   - title: Mad_RP2040
     url: madrp2040-anything-keypad
     repo: Cimos/Mad_RP2040
