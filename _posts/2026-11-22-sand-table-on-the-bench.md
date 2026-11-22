@@ -5,12 +5,13 @@ title:  "Sand Table Update: Parts on the Bench"
 date:   2026-11-22
 tags: [sand-table, freecad, 3d-printing, build-log]
 pcb3d: /assets/models/dune-weaver.glb
-pcb3d_caption: "The whole table out of FreeCAD, glass on. Drag to orbit, scroll to zoom. Go underneath for the mechanism."
+pcb3d_caption: "The whole table out of FreeCAD, glass on. Drag to orbit, scroll to zoom."
+pcb3d_hide: "board,sand,glass,ball"
 ---
 
 Quick update on the [kinetic sand table](/kinetic-sand-table). Last time it was all CAD. Now there's plastic, motors and a flashed controller on the bench.
 
-The model up top is the whole table straight out of the FreeCAD model: the IKEA legs (simplified), the sand ring, wood trims, LED strip, glass, and the mechanism hanging under the board. Spin it over to see the arm.
+The model up top is the whole table straight out of the FreeCAD model: the IKEA legs (simplified), the sand ring, wood trims, LED strip, glass, and the mechanism hanging under the board. Hit **show mechanism** to lift the board off and see the arm.
 
 ## The table side
 
