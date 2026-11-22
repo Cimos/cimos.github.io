@@ -57,7 +57,7 @@ project_entries:
     url: crumbcatcherlight
     repo: Cimos/CrumbCatcherLight
     highlight: WIP
-    desc: Wireless keyboard board on the nRF52840 with LiPo and Qi charging and per-key RGB. Early days.
+    desc: 34-key wireless Choc keyboard on the nRF52840 with LiPo and Qi charging and per-key RGB. Early days.
 
   - title: Mad_RP2040
     url: madrp2040-anything-keypad

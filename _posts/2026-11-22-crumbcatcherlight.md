@@ -16,7 +16,7 @@ CrumbCatcherLight is my wireless keyboard board. It's early, and it's been throu
 - **Per-key RGB** with SK6812 Mini-E LEDs that shine up through the switch.
 - **Tag-Connect** for SWD programming, no header to solder.
 
-The board in the PCB file right now is a 3 x 3 test layout: six hot-swap MX keys and three rotary encoders. A 34-key Choc layout is sitting in the schematic next to it.
+The keyboard itself is a 34-key Choc layout. It's in the schematic, but the keys aren't on a board outline yet. The board drawn in the PCB file right now is a 3 x 3 test layout: six hot-swap MX keys and three rotary encoders.
 
 <figure>
   <img src="../images/crumbcatcherlight/board-top.png" style="max-width: 360px; width: 100%;" alt="KiCad 3D render of the 3 by 3 test board: three rotary encoder footprints across the top, six MX hot-swap sockets below">
