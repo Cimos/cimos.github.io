@@ -113,4 +113,9 @@ Next is ordering parts, test printing the mechanism, and seeing what breaks.
 CAD model, checks, BOM, print sheet and wiring plan are all drafted. Magnets
 bought. Nothing printed yet.
 
+### 2026-11-22 - Parts on the bench
+Table parts printed and fitted, hardware in, DLC32 flashed, first moves on the
+bench. Write-up and a 3D model of the whole table in
+[Sand Table Update: Parts on the Bench](/sand-table-on-the-bench).
+
 -SM

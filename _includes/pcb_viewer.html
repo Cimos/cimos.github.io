@@ -1,5 +1,5 @@
 {% comment %} 3D PCB viewer. include with model="/path.glb" for a real board, or model=true for the procedural placeholder. {% endcomment %}
-<figure class="pcb-viewer" data-model="{{ include.model }}">
+<figure class="pcb-viewer" data-model="{{ include.model }}"{% if include.hide %} data-hide="{{ include.hide }}"{% endif %}>
   <div class="pcb-loading">booting board…</div>
   <div class="pcb-hint">drag to rotate · scroll to zoom</div>
   <figcaption class="pcb-cap">{{ include.caption | default: "Interactive 3D — stylised placeholder until the real board model is dropped in." }}</figcaption>
@@ -76,7 +76,28 @@ controls.addEventListener('start', () => { controls.autoRotate = false; });
 
 function done() { const l = host.querySelector('.pcb-loading'); if (l) l.remove(); }
 
-if (useModel) {
+// Optional button that hides named parts of the model (e.g. the board and glass) to show what's under them.
+function addHideToggle(obj) {
+  const names = (host.getAttribute('data-hide') || '').split(',').map((n) => n.trim()).filter(Boolean);
+  const parts = [];
+  obj.traverse((o) => { if (names.includes(o.name)) parts.push(o); });
+  if (!parts.length) return;
+  const btn = document.createElement('button');
+  btn.type = 'button'; btn.className = 'pcb-toggle';
+  btn.textContent = 'show mechanism'; btn.setAttribute('aria-pressed', 'false');
+  btn.addEventListener('pointerdown', (e) => e.stopPropagation());
+  btn.addEventListener('click', () => {
+    const hidden = btn.getAttribute('aria-pressed') !== 'true';
+    parts.forEach((o) => { o.visible = !hidden; });
+    btn.setAttribute('aria-pressed', String(hidden));
+    btn.textContent = hidden ? 'show table' : 'show mechanism';
+  });
+  host.appendChild(btn);
+}
+
+// Fetch the model only when the viewer is about to scroll into view, so it never slows the page load.
+function loadModel() {
+  const label = host.querySelector('.pcb-loading');
   import('{{ "/assets/js/vendor/GLTFLoader.js" | relative_url }}').then(({ GLTFLoader }) => {
     new GLTFLoader().load(modelUrl, (gltf) => {
       const obj = gltf.scene;
@@ -86,8 +107,18 @@ if (useModel) {
       obj.scale.setScalar(scale);
       obj.position.sub(center.multiplyScalar(scale));
       root.add(obj); done();
-    }, undefined, () => { buildProceduralBoard(); done(); });
+      addHideToggle(obj);
+    }, (e) => {
+      if (label && e.total) label.textContent = `loading model… ${Math.round(100 * e.loaded / e.total)}%`;
+    }, () => { buildProceduralBoard(); done(); });
   });
+}
+
+if (useModel) {
+  const near = new IntersectionObserver((es) => {
+    if (es.some((e) => e.isIntersecting)) { near.disconnect(); loadModel(); }
+  }, { rootMargin: '400px 0px' });
+  near.observe(host);
 } else { buildProceduralBoard(); done(); }
 
 function resize() {

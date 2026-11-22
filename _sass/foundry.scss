@@ -804,6 +804,14 @@ h2:hover > .anchor, h3:hover > .anchor, h4:hover > .anchor { opacity: 0.55; }
   background: color-mix(in srgb, var(--bg) 55%, transparent);
   padding: 0.2em 0.6em; border-radius: 0.4em; pointer-events: none;
 }
+.pcb-toggle {
+  position: absolute; right: 0.7em; top: 0.7em;
+  font-family: "Roboto Mono", "Courier New", monospace; font-size: 0.7rem; letter-spacing: 0.05em;
+  color: var(--blue); background: color-mix(in srgb, var(--bg) 70%, transparent);
+  border: 1px solid var(--edge); border-radius: 0.4em; padding: 0.3em 0.7em; cursor: pointer;
+}
+.pcb-toggle:hover, .pcb-toggle[aria-pressed="true"] { border-color: var(--blue); }
+.pcb-toggle:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 .pcb-cap {
   position: absolute; left: 0.7em; bottom: 0.7em; max-width: 60%;
   font-family: "Roboto Mono", "Courier New", monospace; font-size: 0.62rem;

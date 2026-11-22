@@ -18,7 +18,7 @@ layout: default
 </p>
 {%- endif -%}
 
-{% if page.pcb3d %}{% include pcb_viewer.html model=page.pcb3d caption=page.pcb3d_caption %}{% endif %}
+{% if page.pcb3d %}{% include pcb_viewer.html model=page.pcb3d caption=page.pcb3d_caption hide=page.pcb3d_hide %}{% endif %}
 {{ content }}
 
 {% comment %} related posts by shared tag {% endcomment %}

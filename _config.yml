@@ -67,6 +67,7 @@ exclude:
   - package-lock.json
   - CLAUDE.md
   - README.md
+  - VOICE.md
   - docs
   - LICENSE.txt
   - Gemfile
