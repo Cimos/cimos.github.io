@@ -9,8 +9,7 @@ from collections import defaultdict
 src, dst = sys.argv[1], sys.argv[2]
 parts = json.load(open(src))
 
-DROP = {'fastener envelope', 'purchased fastener envelope', 'purchased nut envelope',
-        'cable reference'}  # cables are swept tubes, over 1M triangles
+DROP = {'fastener envelope', 'purchased fastener envelope', 'purchased nut envelope'}
 # name: (rgb hex, metallic, roughness, alpha, emissive hex or None)
 MATS = {
     'glass':   ('#bad7df', 0.0, 0.05, 0.16, None),
@@ -23,10 +22,12 @@ MATS = {
     'pcb':     ('#1f5f3a', 0.1, 0.6, 1.0, None),
     'electro': ('#536a85', 0.0, 0.6, 1.0, None),
     'ball':    ('#d7dbe0', 1.0, 0.18, 1.0, None),
+    'cable':   ('#ff2e88', 0.0, 0.6, 1.0, None),
 }
 ROLE = {
     'glass': 'glass', 'eva': 'sand', 'base board': 'board', 'side trim': 'wood', 'led strip': 'led',
-    'table leg proxy': 'steel', 'ikea cross': 'steel', 'metal top ring reference': 'steel', 'electronics proxy': 'pcb',
+    'table leg proxy': 'steel', 'ikea cross': 'steel', 'metal top ring reference': 'steel',
+    'cable reference': 'cable', 'electronics proxy': 'pcb',
     'base disc': 'electro', 'electronics deck': 'electro', 'electronics cover': 'electro',
     'electronics hanger': 'electro',
 }

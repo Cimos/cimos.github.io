@@ -8,6 +8,7 @@ Tessellates the table and mechanism into coloured meshes for scripts/models/pack
 import json, os
 from pathlib import Path
 import FreeCAD as App
+import MeshPart
 OUT = Path(os.environ['DW_OUT'])
 STAND_INS = ('mechanism envelope', 'mechanism proxy', 'magnet cup', 'coupling magnet', 'magnet pad')
 table_rep = json.loads(Path('reports/table_mount.validate.json').read_text())
@@ -19,9 +20,14 @@ parts = []
 
 
 def add(name, role, shape, color):
-    bb = shape.BoundBox
-    tol = max(0.4, min(3.0, bb.DiagonalLength * 0.005))
-    pts, tris = shape.tessellate(tol)
+    if role == 'cable reference':
+        # Swept cable tubes tessellate into ~1.4M triangles; a coarse angle keeps them to a few sides.
+        pts, tris = MeshPart.meshFromShape(Shape=shape, LinearDeflection=3.0, AngularDeflection=1.2,
+                                           Relative=False).Topology
+    else:
+        bb = shape.BoundBox
+        tol = max(0.4, min(3.0, bb.DiagonalLength * 0.005))
+        pts, tris = shape.tessellate(tol)
     parts.append(dict(name=name, role=role, color=color,
                       v=[[round(p.x, 2), round(p.y, 2), round(p.z, 2)] for p in pts],
                       f=[list(t) for t in tris]))
