@@ -76,7 +76,9 @@ controls.addEventListener('start', () => { controls.autoRotate = false; });
 
 function done() { const l = host.querySelector('.pcb-loading'); if (l) l.remove(); }
 
-if (useModel) {
+// Fetch the model only when the viewer is about to scroll into view, so it never slows the page load.
+function loadModel() {
+  const label = host.querySelector('.pcb-loading');
   import('{{ "/assets/js/vendor/GLTFLoader.js" | relative_url }}').then(({ GLTFLoader }) => {
     new GLTFLoader().load(modelUrl, (gltf) => {
       const obj = gltf.scene;
@@ -86,8 +88,17 @@ if (useModel) {
       obj.scale.setScalar(scale);
       obj.position.sub(center.multiplyScalar(scale));
       root.add(obj); done();
-    }, undefined, () => { buildProceduralBoard(); done(); });
+    }, (e) => {
+      if (label && e.total) label.textContent = `loading model… ${Math.round(100 * e.loaded / e.total)}%`;
+    }, () => { buildProceduralBoard(); done(); });
   });
+}
+
+if (useModel) {
+  const near = new IntersectionObserver((es) => {
+    if (es.some((e) => e.isIntersecting)) { near.disconnect(); loadModel(); }
+  }, { rootMargin: '400px 0px' });
+  near.observe(host);
 } else { buildProceduralBoard(); done(); }
 
 function resize() {
